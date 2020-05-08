@@ -1,7 +1,7 @@
-parser: mini_l.lex
-	bison -v -d --file-prefix=y calc.y
+parser: mini_l.lex mini_l.y
+	bison -v -d --file-prefix=y mini_l.y
 	flex mini_l.lex
-	gcc -o lexer lex.yy.c -lfl
+	gcc -o parser y.tab.c lex.yy.c -lfl
 clean:
-	rm -f lex.yy.c lexer
+	rm -f lex.yy.c y.tab.* y.outout * .0 calc
 		
