@@ -1,0 +1,379 @@
+Nonterminals useless in grammar
+
+   expression
+   multiplicative_expression
+   term
+   Var
+
+
+Terminals unused in grammar
+
+   COMMA
+   READ
+   WRITE
+   MULT
+   DIV
+   PLUS
+   MINUS
+   EQUAL
+   PER
+   END
+   FOR
+   CONTINUE
+   L_PAREN
+   R_PAREN
+   statements
+   BEGINLOOP
+   ENDLOOP
+   ENDIF
+   ELSE
+   IF
+   THEN
+   WHILE
+   DO
+   EQ
+   NEQ
+   LT
+   GT
+   GTE
+   LTE
+   AND
+   OR
+   NOT
+   TRUE
+   FALSE
+   RETURN
+   ASSIGN
+   UMINUS
+
+
+Rules useless in grammar
+
+    9 expression: multiplicative_expression
+   10           | multiplicative_expression PLUS multiplicative_expression
+   11           | multiplicative_expression MINUS multiplicative_expression
+
+   12 multiplicative_expression: term
+   13                          | term PER term
+
+   14 term: Var
+   15     | NUMBER
+   16     | L_PAREN expression R_PAREN
+   17     | IDENT L_PAREN expression R_PAREN
+
+   18 Var: IDENT
+   19    | IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: functions
+
+    2 functions: %empty
+    3          | function functions
+
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY END_BODY
+
+    5 declaration: %empty
+    6            | declaration SEMICOLON declarations
+    7            | identifiers COLON INTEGER
+    8            | identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+FUNCTION (258) 4
+SEMICOLON (259) 4 6
+COMMA (260)
+COLON (261) 7 8
+READ (262)
+WRITE (263)
+MULT (264)
+DIV (265)
+PLUS (266)
+MINUS (267)
+EQUAL (268)
+PER (269)
+END (270)
+FOR (271)
+CONTINUE (272)
+L_SQUARE_BRACKET (273) 8
+R_SQUARE_BRACKET (274) 8
+L_PAREN (275)
+R_PAREN (276)
+statements (277)
+declarations (278) 6
+BEGIN_PARAMS (279) 4
+END_PARAMS (280) 4
+BEGINLOOP (281)
+ENDLOOP (282)
+BEGIN_LOCALS (283) 4
+END_LOCALS (284) 4
+BEGIN_BODY (285) 4
+END_BODY (286) 4
+INTEGER (287) 7 8
+ARRAY (288) 8
+OF (289) 8
+ENDIF (290)
+ELSE (291)
+IF (292)
+THEN (293)
+WHILE (294)
+DO (295)
+EQ (296)
+NEQ (297)
+LT (298)
+GT (299)
+GTE (300)
+LTE (301)
+AND (302)
+OR (303)
+NOT (304)
+TRUE (305)
+FALSE (306)
+RETURN (307)
+ASSIGN (308)
+IDENT (309) 4
+identifiers (310) 7 8
+NUMBER (311) 8
+UMINUS (312)
+
+
+Nonterminals, with rules where they appear
+
+$accept (58)
+    on left: 0
+program (59)
+    on left: 1, on right: 0
+functions (60)
+    on left: 2 3, on right: 1 3
+function (61)
+    on left: 4, on right: 3
+declaration (62)
+    on left: 5 6 7 8, on right: 4 6
+
+
+State 0
+
+    0 $accept: . program $end
+
+    FUNCTION  shift, and go to state 1
+
+    $default  reduce using rule 2 (functions)
+
+    program    go to state 2
+    functions  go to state 3
+    function   go to state 4
+
+
+State 1
+
+    4 function: FUNCTION . IDENT SEMICOLON BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY END_BODY
+
+    IDENT  shift, and go to state 5
+
+
+State 2
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 6
+
+
+State 3
+
+    1 program: functions .
+
+    $default  reduce using rule 1 (program)
+
+
+State 4
+
+    3 functions: function . functions
+
+    FUNCTION  shift, and go to state 1
+
+    $default  reduce using rule 2 (functions)
+
+    functions  go to state 7
+    function   go to state 4
+
+
+State 5
+
+    4 function: FUNCTION IDENT . SEMICOLON BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY END_BODY
+
+    SEMICOLON  shift, and go to state 8
+
+
+State 6
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 7
+
+    3 functions: function functions .
+
+    $default  reduce using rule 3 (functions)
+
+
+State 8
+
+    4 function: FUNCTION IDENT SEMICOLON . BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY END_BODY
+
+    BEGIN_PARAMS  shift, and go to state 9
+
+
+State 9
+
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS . declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY END_BODY
+
+    identifiers  shift, and go to state 10
+
+    $default  reduce using rule 5 (declaration)
+
+    declaration  go to state 11
+
+
+State 10
+
+    7 declaration: identifiers . COLON INTEGER
+    8            | identifiers . COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
+
+    COLON  shift, and go to state 12
+
+
+State 11
+
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declaration . END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY END_BODY
+    6 declaration: declaration . SEMICOLON declarations
+
+    SEMICOLON   shift, and go to state 13
+    END_PARAMS  shift, and go to state 14
+
+
+State 12
+
+    7 declaration: identifiers COLON . INTEGER
+    8            | identifiers COLON . ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
+
+    INTEGER  shift, and go to state 15
+    ARRAY    shift, and go to state 16
+
+
+State 13
+
+    6 declaration: declaration SEMICOLON . declarations
+
+    declarations  shift, and go to state 17
+
+
+State 14
+
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declaration END_PARAMS . BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY END_BODY
+
+    BEGIN_LOCALS  shift, and go to state 18
+
+
+State 15
+
+    7 declaration: identifiers COLON INTEGER .
+
+    $default  reduce using rule 7 (declaration)
+
+
+State 16
+
+    8 declaration: identifiers COLON ARRAY . L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
+
+    L_SQUARE_BRACKET  shift, and go to state 19
+
+
+State 17
+
+    6 declaration: declaration SEMICOLON declarations .
+
+    $default  reduce using rule 6 (declaration)
+
+
+State 18
+
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS . declaration END_LOCALS BEGIN_BODY END_BODY
+
+    identifiers  shift, and go to state 10
+
+    $default  reduce using rule 5 (declaration)
+
+    declaration  go to state 20
+
+
+State 19
+
+    8 declaration: identifiers COLON ARRAY L_SQUARE_BRACKET . NUMBER R_SQUARE_BRACKET OF INTEGER
+
+    NUMBER  shift, and go to state 21
+
+
+State 20
+
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS declaration . END_LOCALS BEGIN_BODY END_BODY
+    6 declaration: declaration . SEMICOLON declarations
+
+    SEMICOLON   shift, and go to state 13
+    END_LOCALS  shift, and go to state 22
+
+
+State 21
+
+    8 declaration: identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER . R_SQUARE_BRACKET OF INTEGER
+
+    R_SQUARE_BRACKET  shift, and go to state 23
+
+
+State 22
+
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS . BEGIN_BODY END_BODY
+
+    BEGIN_BODY  shift, and go to state 24
+
+
+State 23
+
+    8 declaration: identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET . OF INTEGER
+
+    OF  shift, and go to state 25
+
+
+State 24
+
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY . END_BODY
+
+    END_BODY  shift, and go to state 26
+
+
+State 25
+
+    8 declaration: identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF . INTEGER
+
+    INTEGER  shift, and go to state 27
+
+
+State 26
+
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY END_BODY .
+
+    $default  reduce using rule 4 (function)
+
+
+State 27
+
+    8 declaration: identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER .
+
+    $default  reduce using rule 8 (declaration)
