@@ -4,23 +4,21 @@ endparams
 
 beginlocals
 
-  n: integer;
-  i, j, k: integer;
-  t: array [20] or integer;
+  n : integer;
+  i, j, k : integer;
+  t : array [20] of integer;
 
-endlocals      
+endlocals     
+beginbody   
+  read i, j;
 
-startbody      ## main program  
-
-  red i, j;
-
-  k: = 0;
-  n: = 20;
+  k := 0;
+  n := 20;
   
   do 
-    begin loop
-       t [k]: = k;
-       k: = k + 1;
+    beginloop
+       t [k] := k;
+       k := k + 1;
        if k% 2 == 0 then
            Continue;
        endif;
@@ -29,16 +27,16 @@ startbody      ## main program
   while k <n;
 
   if i <j and j <n and i> = 0 then
-     t [i]: = i * 2;
-     t [j]: = j * 2;
-     k: = t [i];
-     t [i]: = t [j];
-     t [j]: = k;
+     t [i] := i * 2;
+     t [j] := j * 2;
+     k := t [i];
+     t [i] := t [j];
+     t [j] := k;
   else
      while i> = j or false 
-       begin loop
-        k: = (1 + i - j)% 3;
-        i: = i - 1;
+       beginloop
+        k := (1 + i - j)% 3;
+        i := i - 1;
         if k> 1 then
              Continue;
         endif;

@@ -351,8 +351,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 56
-#define YY_END_OF_BUFFER 57
+#define YY_NUM_RULES 57
+#define YY_END_OF_BUFFER 58
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -362,11 +362,11 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[158] =
     {   0,
-        0,    0,   57,   53,   52,   56,   53,    5,    7,    8,
+        0,    0,   58,   54,   53,   52,   54,    5,    7,    8,
         3,    2,   18,    1,    4,   49,   19,   17,   13,    6,
-       14,   50,    9,   10,   53,   50,   50,   50,   50,   50,
-       50,   50,   50,   50,   50,   50,   50,   52,    0,   49,
-       55,   20,   15,   12,   11,   16,   50,   54,   50,   50,
+       14,   50,    9,   10,   54,   50,   50,   50,   50,   50,
+       50,   50,   50,   50,   50,   50,   50,   53,    0,   49,
+       56,   20,   15,   12,   11,   16,   50,   55,   50,   50,
        50,   50,   36,   50,   50,   50,   50,   50,   31,   50,
        50,   30,   44,   50,   50,   50,   50,   50,    0,   51,
        43,   50,   50,   50,   50,   50,   50,   37,   50,   50,
@@ -561,7 +561,7 @@ char *yytext;
 #line 1 "mini_l.lex"
 #line 2 "mini_l.lex"
 #include "y.tab.h"
-   int currLine = 1, currPos = 0;
+   int currLine = 1, currPos = 1;
    int numNumbers = 0;
    int numOperators = 0;
    int numParens = 0;
@@ -1107,34 +1107,40 @@ case 51:
 /* rule 51 can match eol */
 YY_RULE_SETUP
 #line 77 "mini_l.lex"
-{currPos += yyleng; numComments++;}     
+{currPos += yyleng; numComments++;}
 	YY_BREAK
 case 52:
+/* rule 52 can match eol */
 YY_RULE_SETUP
-#line 79 "mini_l.lex"
-{/* ignore spaces */ currPos += yyleng;}
+#line 78 "mini_l.lex"
+{currLine += 1; currPos = 1;}     
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 83 "mini_l.lex"
-{printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", currLine, currPos, yytext); exit(0);}
+#line 80 "mini_l.lex"
+{/* ignore spaces */ currPos += yyleng;}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 85 "mini_l.lex"
-{printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(1);}
+#line 84 "mini_l.lex"
+{printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", currLine, currPos, yytext); exit(0);}
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 87 "mini_l.lex"
-{printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(2);}
+#line 86 "mini_l.lex"
+{printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(1);}
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 90 "mini_l.lex"
+#line 88 "mini_l.lex"
+{printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(2);}
+	YY_BREAK
+case 57:
+YY_RULE_SETUP
+#line 91 "mini_l.lex"
 ECHO;
 	YY_BREAK
-#line 1138 "lex.yy.c"
+#line 1144 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2139,7 +2145,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 90 "mini_l.lex"
+#line 91 "mini_l.lex"
 
 
 

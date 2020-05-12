@@ -52,7 +52,7 @@ declaration: ident COLON INTEGER
 
 ident: IDENT 
 	   {printf("ident->IDENT\n");}
-          | IDENT COMMA ident  
+          | IDENT COMMA ident   
 	  {printf("ident->IDENT COMMA ident\n");}
          ;
 statements: statement SEMICOLON
@@ -62,15 +62,17 @@ statements: statement SEMICOLON
          ;
 statement: var ASSIGN expressions
 	 {printf("statement->Var ASSIGN expression\n");}
-         | IF bool_expression THEN statements SEMICOLON ENDIF
+         | IF bool_expression THEN statements ENDIF
          {printf("statement->IF bool_expression THEN statements SEMICOLON ENDIF\n");}
-         | IF bool_expression THEN ELSE statements SEMICOLON ENDIF
+         | IF bool_expression THEN statements ELSE statements ENDIF
          {printf("statement->IF bool_expression THEN statements SEMICOLON ENDIF\n");}  
-         | WHILE bool_expression BEGINLOOP statements SEMICOLON ENDLOOP
+         | WHILE bool_expression BEGINLOOP statements ENDLOOP
          {printf("statement->WHILE bool_expression BEGINLOOP statements SEMICOLON ENDLOOP\n");}
-         | DO BEGINLOOP statements SEMICOLON ENDLOOP WHILE bool_expression
+         | DO BEGINLOOP statements ENDLOOP WHILE bool_expression
          {printf("statement->DO BEGINLOOP statements SEMICOLON ENDLOOP WHILE bool_expression\n");}
-         | READ vars
+         | FOR vars ASSIGN NUMBER SEMICOLON bool_expression SEMICOLON vars ASSIGN expressions BEGINLOOP statements ENDLOOP
+         {printf("statement->FOR vars ASSIGN NUMBER SEMICOLON bool_expression SEMICOLON vars ASSIGN expressions BEGINLOOP statements SEMICOLON ENDLOOP\n");}
+         | READ vars 
          {printf("statement->READ var\n");}
          | WRITE vars
          {printf("statement->WRITE vars\n");}
@@ -84,6 +86,7 @@ bool_expression: relation_and_expression
 		{printf("bool_expression->relation_and_expression\n");}
               | relation_and_expression OR relation_and_expression
                 {printf("bool_expression->relation_and_expression OR relation_and_expression\n");}
+              
          ;
 relation_and_expression: relation_expression
 		       {printf("relation_and_expression->relation_expression\n");}
@@ -123,36 +126,40 @@ comp: EQ
     {printf("comp->LTE\n");}
    ;
 
-var: ident SEMICOLON
-    {printf("Var->identifiers\n");}
-    | ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET 
-    {printf("Var->identifiers L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
-    | ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET
-    {printf("Var->identifiers L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
+var: IDENT  
+    {printf("var->IDENT\n");}
+    | IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET 
+    {printf("var->ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
+    | IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET
+    {printf("var->ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
     ;
 
 vars: var
     {printf("vars->var\n");}
-    | vars COMMA var
-    {printf("vars->vars COMMA var\n");}
+    | var COMMA vars
+    {printf("vars->var COMMA vars\n");}
    ;
-expression: multiplicative_expressions  
+expression: multiplicative_expression  
 	  {printf("expression->multiplicative_expression\n");}
-         
+         | multiplicative_expression PLUS multiplicative_expression
+          {printf("expression->multiplicative_expression PLUS multiplicative_expression\n");} 
+         | multiplicative_expression MINUS multiplicative_expression
+          {printf("expression->multiplicative_expression MINUS multiplicative_expression\n");}
          ;
-expressions: COMMA expression
-	   {printf("expressions->COMMA expression\n");}
+expressions: expression
+	   {printf("expressions->expression\n");}
          ;
 
-multiplicative_expression: terms
-			 {printf("multiplicative_expression->terms\n");}
+multiplicative_expression: term 
+			 {printf("multiplicative_expression->terms\n");} 
+                        | term MULT term
+                         {printf("multiplicative_expression->term MULT term\n");}
+                        | term DIV term 
+                         {printf("multiplicative_expression->term DIV term\n");}
+                        | term PER term
+                         {printf("multiplicative_expression->term PER term\n");}
                         ;
 
-multiplicative_expressions: PLUS multiplicative_expression
-			  {printf("multiplicative->PLUS multiplicative_expression\n");}
-                          | MINUS multiplicative_expression 
-                          {printf("multiplicative_expressions->MINUS multiplicative_expression\n");}
-                         ;
 
 term: ident L_PAREN expressions R_PAREN 
     {printf("term->identifier L_PAREN expressions R_PAREN\n");}
@@ -161,21 +168,14 @@ term: ident L_PAREN expressions R_PAREN
     | NUMBER 
     {printf("term->NUMBER\n");}
     | L_PAREN expressions R_PAREN
-    {printf("term->L_PAREN expressions R_PAREN\n");};
+    {printf("term->L_PAREN expressions R_PAREN\n");}
+    | MINUS var
+    {printf("term->MINUS var\n");}
+    | MINUS NUMBER 
+    {printf("term->MINUS NUMBER\n");}
+    | MINUS L_PAREN expressions R_PAREN
+    {printf("term->MINUS L_PAREN expressions R_PAREN\n");}
     ;
-
-terms: MULT term
-     {printf("terms->MUL term\n");}
-     | DIV term
-     {printf("terms->DIV term\n");}
-     | PER term
-     {printf("terms->PER term\n");}
-     | MINUS term
-     {printf("terms->MINUS term\n");}
-    ;
-
-
-
 
 %%
 
@@ -200,5 +200,5 @@ int main(int argc, char ** argv)
 }
 
 void yyerror(const char *msg){
-   printf("Error in line %d, position %d: %s\n", currPos, currLine, msg);
+   printf("Error in line %d, position %d: %s\n", currLine, currPos, msg);
 }

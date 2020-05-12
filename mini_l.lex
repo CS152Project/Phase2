@@ -1,6 +1,6 @@
 %{
 #include "y.tab.h"
-   int currLine = 1, currPos = 0;
+   int currLine = 1, currPos = 1;
    int numNumbers = 0;
    int numOperators = 0;
    int numParens = 0;
@@ -74,7 +74,8 @@ NewLine  [\n]
 
 {INTEGER}+      {currPos += yyleng; atoi(yytext); return NUMBER;}
 ({LETTER}({LETTER}|{DIGIT}|"_")*({LETTER}|{DIGIT}))|({LETTER})      {currPos += yyleng; numWords++; yylval.identval=strdup(yytext); return IDENT;} 
-"##".*{NewLine}           {currPos += yyleng; numComments++;}     
+"##".*{NewLine}           {currPos += yyleng; numComments++;}
+{NewLine}                 {currLine += 1; currPos = 1;}     
 
 [ \t]+         {/* ignore spaces */ currPos += yyleng;}
 
