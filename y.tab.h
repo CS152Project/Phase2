@@ -107,11 +107,10 @@ union YYSTYPE
 {
 #line 11 "calc.y" /* yacc.c:1909  */
 
-   double * dval;
+   char * identval;
    int iVal;
-   char * cVal;
 
-#line 115 "y.tab.h" /* yacc.c:1909  */
+#line 114 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

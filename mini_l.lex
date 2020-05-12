@@ -72,8 +72,8 @@ NewLine  [\n]
 "false"        {currPos += yyleng; numWords++; return FALSE;}
 "return"       {currPos += yyleng; numWords++; return RETURN;}
 
-{INTEGER}+      {currPos += yyleng; yylval.iVal=atoi(yytext); return NUMBER;}
-({LETTER}({LETTER}|{DIGIT}|"_")*({LETTER}|{DIGIT}))|({LETTER})      {currPos += yyleng; numWords++; yylval.cVal=strdup(yytext); return IDENT;} 
+{INTEGER}+      {currPos += yyleng; atoi(yytext); return NUMBER;}
+({LETTER}({LETTER}|{DIGIT}|"_")*({LETTER}|{DIGIT}))|({LETTER})      {currPos += yyleng; numWords++; yylval.identval=strdup(yytext); return IDENT;} 
 "##".*{NewLine}           {currPos += yyleng; numComments++;}     
 
 [ \t]+         {/* ignore spaces */ currPos += yyleng;}

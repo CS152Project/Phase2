@@ -9,9 +9,8 @@ void yyerror(const char *msg);
 %}
 
 %union{
-   double * dval;
+   char * identval;
    int iVal;
-   char * cVal;
 }
 
 %error-verbose
@@ -22,7 +21,7 @@ void yyerror(const char *msg);
 %token BEGIN_PARAMS END_PARAMS BEGINLOOP ENDLOOP BEGIN_LOCALS END_LOCALS 
 %token BEGIN_BODY END_BODY INTEGER ARRAY OF ENDIF ELSE IF THEN WHILE DO  
 %token EQ NEQ LT GT GTE LTE AND OR NOT TRUE FALSE RETURN ASSIGN  
-%token <cVal> IDENT  
+%token <identVal> IDENT  
 %token <iVal> NUMBER
 %nonassoc UMINUS
 %%
@@ -73,6 +72,12 @@ statement: var ASSIGN expressions
          {printf("statement->DO BEGINLOOP statements SEMICOLON ENDLOOP WHILE bool_expression\n");}
          | READ vars
          {printf("statement->READ Vars\n");}
+         | WRITE vars
+         {printf("statement->WRITE Vars\n");}
+         | CONTINUE
+         {printf("statement->CONTINUE\n");}
+         | RETURN expressions
+         {printf("statement->RETURN expressions\n");}
          ;
 
 bool_expression: relation_and_expression

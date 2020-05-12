@@ -1096,12 +1096,12 @@ YY_RULE_SETUP
 case 49:
 YY_RULE_SETUP
 #line 75 "mini_l.lex"
-{currPos += yyleng; yylval.iVal=atoi(yytext); return NUMBER;}
+{currPos += yyleng; atoi(yytext); return NUMBER;}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
 #line 76 "mini_l.lex"
-{currPos += yyleng; numWords++; yylval.cVal=strdup(yytext); return IDENT;} 
+{currPos += yyleng; numWords++; yylval.identval=strdup(yytext); return IDENT;} 
 	YY_BREAK
 case 51:
 /* rule 51 can match eol */
