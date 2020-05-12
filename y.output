@@ -1,68 +1,15 @@
-Nonterminals useless in grammar
-
-   expression
-   multiplicative_expression
-   term
-   Var
-
-
 Terminals unused in grammar
 
-   COMMA
-   READ
    WRITE
-   MULT
-   DIV
-   PLUS
-   MINUS
    EQUAL
-   PER
    END
    FOR
    CONTINUE
-   L_PAREN
-   R_PAREN
-   statements
-   BEGINLOOP
-   ENDLOOP
-   ENDIF
-   ELSE
-   IF
-   THEN
-   WHILE
-   DO
-   EQ
-   NEQ
-   LT
-   GT
-   GTE
-   LTE
-   AND
-   OR
-   NOT
-   TRUE
-   FALSE
    RETURN
-   ASSIGN
    UMINUS
 
 
-Rules useless in grammar
-
-    9 expression: multiplicative_expression
-   10           | multiplicative_expression PLUS multiplicative_expression
-   11           | multiplicative_expression MINUS multiplicative_expression
-
-   12 multiplicative_expression: term
-   13                          | term PER term
-
-   14 term: Var
-   15     | NUMBER
-   16     | L_PAREN expression R_PAREN
-   17     | IDENT L_PAREN expression R_PAREN
-
-   18 Var: IDENT
-   19    | IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET
+State 10 conflicts: 1 shift/reduce
 
 
 Grammar
@@ -74,12 +21,75 @@ Grammar
     2 functions: %empty
     3          | function functions
 
-    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY END_BODY
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
 
-    5 declaration: %empty
-    6            | declaration SEMICOLON declarations
-    7            | identifiers COLON INTEGER
-    8            | identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
+    5 declarations: %empty
+    6             | declaration SEMICOLON declarations
+
+    7 declaration: ident COLON INTEGER
+    8            | ident COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
+    9            | ident COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
+
+   10 ident: IDENT
+   11      | IDENT COMMA ident
+
+   12 statements: statement SEMICOLON
+   13           | statement SEMICOLON statements
+
+   14 statement: var ASSIGN expressions
+   15          | IF bool_expression THEN statements SEMICOLON ENDIF
+   16          | IF bool_expression THEN ELSE statements SEMICOLON ENDIF
+   17          | WHILE bool_expression BEGINLOOP statements SEMICOLON ENDLOOP
+   18          | DO BEGINLOOP statements SEMICOLON ENDLOOP WHILE bool_expression
+   19          | READ vars
+
+   20 bool_expression: relation_and_expression
+   21                | relation_and_expression OR relation_and_expression
+
+   22 relation_and_expression: relation_expression
+   23                        | relation_expression AND relation_expression
+
+   24 relation_expression: NOT expressions comp expressions
+   25                    | NOT TRUE
+   26                    | NOT FALSE
+   27                    | NOT L_PAREN bool_expression R_PAREN
+   28                    | expressions comp expressions
+   29                    | TRUE
+   30                    | FALSE
+   31                    | L_PAREN bool_expression R_PAREN
+
+   32 comp: EQ
+   33     | NEQ
+   34     | LT
+   35     | GT
+   36     | GTE
+   37     | LTE
+
+   38 var: ident
+   39    | ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET
+   40    | ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET
+
+   41 vars: var
+   42     | var COMMA vars
+
+   43 expression: multiplicative_expressions
+
+   44 expressions: COMMA expression
+
+   45 multiplicative_expression: terms
+
+   46 multiplicative_expressions: PLUS multiplicative_expression
+   47                           | MINUS multiplicative_expression
+
+   48 term: ident L_PAREN expressions R_PAREN
+   49     | var
+   50     | NUMBER
+   51     | L_PAREN expressions R_PAREN
+
+   52 terms: MULT term
+   53      | DIV term
+   54      | PER term
+   55      | MINUS term
 
 
 Terminals, with rules where they appear
@@ -87,74 +97,103 @@ Terminals, with rules where they appear
 $end (0) 0
 error (256)
 FUNCTION (258) 4
-SEMICOLON (259) 4 6
-COMMA (260)
-COLON (261) 7 8
-READ (262)
+SEMICOLON (259) 4 6 12 13 15 16 17 18
+COMMA (260) 11 42 44
+COLON (261) 7 8 9
+READ (262) 19
 WRITE (263)
-MULT (264)
-DIV (265)
-PLUS (266)
-MINUS (267)
+MULT (264) 52
+DIV (265) 53
+PLUS (266) 46
+MINUS (267) 47 55
 EQUAL (268)
-PER (269)
+PER (269) 54
 END (270)
 FOR (271)
 CONTINUE (272)
-L_SQUARE_BRACKET (273) 8
-R_SQUARE_BRACKET (274) 8
-L_PAREN (275)
-R_PAREN (276)
-statements (277)
-declarations (278) 6
-BEGIN_PARAMS (279) 4
-END_PARAMS (280) 4
-BEGINLOOP (281)
-ENDLOOP (282)
-BEGIN_LOCALS (283) 4
-END_LOCALS (284) 4
-BEGIN_BODY (285) 4
-END_BODY (286) 4
-INTEGER (287) 7 8
-ARRAY (288) 8
-OF (289) 8
-ENDIF (290)
-ELSE (291)
-IF (292)
-THEN (293)
-WHILE (294)
-DO (295)
-EQ (296)
-NEQ (297)
-LT (298)
-GT (299)
-GTE (300)
-LTE (301)
-AND (302)
-OR (303)
-NOT (304)
-TRUE (305)
-FALSE (306)
-RETURN (307)
-ASSIGN (308)
-IDENT (309) 4
-identifiers (310) 7 8
-NUMBER (311) 8
-UMINUS (312)
+L_SQUARE_BRACKET (273) 8 9 39 40
+R_SQUARE_BRACKET (274) 8 9 39 40
+L_PAREN (275) 27 31 48 51
+R_PAREN (276) 27 31 48 51
+BEGIN_PARAMS (277) 4
+END_PARAMS (278) 4
+BEGINLOOP (279) 17 18
+ENDLOOP (280) 17 18
+BEGIN_LOCALS (281) 4
+END_LOCALS (282) 4
+BEGIN_BODY (283) 4
+END_BODY (284) 4
+INTEGER (285) 7 8 9
+ARRAY (286) 8 9
+OF (287) 8 9
+ENDIF (288) 15 16
+ELSE (289) 16
+IF (290) 15 16
+THEN (291) 15 16
+WHILE (292) 17 18
+DO (293) 18
+EQ (294) 32
+NEQ (295) 33
+LT (296) 34
+GT (297) 35
+GTE (298) 36
+LTE (299) 37
+AND (300) 23
+OR (301) 21
+NOT (302) 24 25 26 27
+TRUE (303) 25 29
+FALSE (304) 26 30
+RETURN (305)
+ASSIGN (306) 14
+IDENT (307) 4 10 11
+NUMBER (308) 8 9 50
+UMINUS (309)
 
 
 Nonterminals, with rules where they appear
 
-$accept (58)
+$accept (55)
     on left: 0
-program (59)
+program (56)
     on left: 1, on right: 0
-functions (60)
+functions (57)
     on left: 2 3, on right: 1 3
-function (61)
+function (58)
     on left: 4, on right: 3
-declaration (62)
-    on left: 5 6 7 8, on right: 4 6
+declarations (59)
+    on left: 5 6, on right: 4 6
+declaration (60)
+    on left: 7 8 9, on right: 6
+ident (61)
+    on left: 10 11, on right: 7 8 9 11 38 39 40 48
+statements (62)
+    on left: 12 13, on right: 4 13 15 16 17 18
+statement (63)
+    on left: 14 15 16 17 18 19, on right: 12 13
+bool_expression (64)
+    on left: 20 21, on right: 15 16 17 18 27 31
+relation_and_expression (65)
+    on left: 22 23, on right: 20 21
+relation_expression (66)
+    on left: 24 25 26 27 28 29 30 31, on right: 22 23
+comp (67)
+    on left: 32 33 34 35 36 37, on right: 24 28
+var (68)
+    on left: 38 39 40, on right: 14 41 42 49
+vars (69)
+    on left: 41 42, on right: 19 42
+expression (70)
+    on left: 43, on right: 39 40 44
+expressions (71)
+    on left: 44, on right: 14 24 28 48 51
+multiplicative_expression (72)
+    on left: 45, on right: 46 47
+multiplicative_expressions (73)
+    on left: 46 47, on right: 43
+term (74)
+    on left: 48 49 50 51, on right: 52 53 54 55
+terms (75)
+    on left: 52 53 54 55, on right: 45
 
 
 State 0
@@ -172,7 +211,7 @@ State 0
 
 State 1
 
-    4 function: FUNCTION . IDENT SEMICOLON BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY END_BODY
+    4 function: FUNCTION . IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
 
     IDENT  shift, and go to state 5
 
@@ -205,7 +244,7 @@ State 4
 
 State 5
 
-    4 function: FUNCTION IDENT . SEMICOLON BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY END_BODY
+    4 function: FUNCTION IDENT . SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
 
     SEMICOLON  shift, and go to state 8
 
@@ -226,154 +265,1142 @@ State 7
 
 State 8
 
-    4 function: FUNCTION IDENT SEMICOLON . BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY END_BODY
+    4 function: FUNCTION IDENT SEMICOLON . BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
 
     BEGIN_PARAMS  shift, and go to state 9
 
 
 State 9
 
-    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS . declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY END_BODY
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS . declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
 
-    identifiers  shift, and go to state 10
+    IDENT  shift, and go to state 10
 
-    $default  reduce using rule 5 (declaration)
+    $default  reduce using rule 5 (declarations)
 
-    declaration  go to state 11
+    declarations  go to state 11
+    declaration   go to state 12
+    ident         go to state 13
 
 
 State 10
 
-    7 declaration: identifiers . COLON INTEGER
-    8            | identifiers . COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
+   10 ident: IDENT .
+   11      | IDENT . COMMA ident
 
-    COLON  shift, and go to state 12
+    COMMA  shift, and go to state 14
+
+    COMMA     [reduce using rule 10 (ident)]
+    $default  reduce using rule 10 (ident)
 
 
 State 11
 
-    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declaration . END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY END_BODY
-    6 declaration: declaration . SEMICOLON declarations
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations . END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
 
-    SEMICOLON   shift, and go to state 13
-    END_PARAMS  shift, and go to state 14
+    END_PARAMS  shift, and go to state 15
 
 
 State 12
 
-    7 declaration: identifiers COLON . INTEGER
-    8            | identifiers COLON . ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
+    6 declarations: declaration . SEMICOLON declarations
 
-    INTEGER  shift, and go to state 15
-    ARRAY    shift, and go to state 16
+    SEMICOLON  shift, and go to state 16
 
 
 State 13
 
-    6 declaration: declaration SEMICOLON . declarations
+    7 declaration: ident . COLON INTEGER
+    8            | ident . COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
+    9            | ident . COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
 
-    declarations  shift, and go to state 17
+    COLON  shift, and go to state 17
 
 
 State 14
 
-    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declaration END_PARAMS . BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY END_BODY
+   11 ident: IDENT COMMA . ident
 
-    BEGIN_LOCALS  shift, and go to state 18
+    IDENT  shift, and go to state 10
+
+    ident  go to state 18
 
 
 State 15
 
-    7 declaration: identifiers COLON INTEGER .
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS . BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
 
-    $default  reduce using rule 7 (declaration)
+    BEGIN_LOCALS  shift, and go to state 19
 
 
 State 16
 
-    8 declaration: identifiers COLON ARRAY . L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
+    6 declarations: declaration SEMICOLON . declarations
 
-    L_SQUARE_BRACKET  shift, and go to state 19
+    IDENT  shift, and go to state 10
+
+    $default  reduce using rule 5 (declarations)
+
+    declarations  go to state 20
+    declaration   go to state 12
+    ident         go to state 13
 
 
 State 17
 
-    6 declaration: declaration SEMICOLON declarations .
+    7 declaration: ident COLON . INTEGER
+    8            | ident COLON . ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
+    9            | ident COLON . ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
 
-    $default  reduce using rule 6 (declaration)
+    INTEGER  shift, and go to state 21
+    ARRAY    shift, and go to state 22
 
 
 State 18
 
-    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS . declaration END_LOCALS BEGIN_BODY END_BODY
+   11 ident: IDENT COMMA ident .
 
-    identifiers  shift, and go to state 10
-
-    $default  reduce using rule 5 (declaration)
-
-    declaration  go to state 20
+    $default  reduce using rule 11 (ident)
 
 
 State 19
 
-    8 declaration: identifiers COLON ARRAY L_SQUARE_BRACKET . NUMBER R_SQUARE_BRACKET OF INTEGER
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS . declarations END_LOCALS BEGIN_BODY statements END_BODY
 
-    NUMBER  shift, and go to state 21
+    IDENT  shift, and go to state 10
+
+    $default  reduce using rule 5 (declarations)
+
+    declarations  go to state 23
+    declaration   go to state 12
+    ident         go to state 13
 
 
 State 20
 
-    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS declaration . END_LOCALS BEGIN_BODY END_BODY
-    6 declaration: declaration . SEMICOLON declarations
+    6 declarations: declaration SEMICOLON declarations .
 
-    SEMICOLON   shift, and go to state 13
-    END_LOCALS  shift, and go to state 22
+    $default  reduce using rule 6 (declarations)
 
 
 State 21
 
-    8 declaration: identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER . R_SQUARE_BRACKET OF INTEGER
+    7 declaration: ident COLON INTEGER .
 
-    R_SQUARE_BRACKET  shift, and go to state 23
+    $default  reduce using rule 7 (declaration)
 
 
 State 22
 
-    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS . BEGIN_BODY END_BODY
+    8 declaration: ident COLON ARRAY . L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
+    9            | ident COLON ARRAY . L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
 
-    BEGIN_BODY  shift, and go to state 24
+    L_SQUARE_BRACKET  shift, and go to state 24
 
 
 State 23
 
-    8 declaration: identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET . OF INTEGER
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations . END_LOCALS BEGIN_BODY statements END_BODY
 
-    OF  shift, and go to state 25
+    END_LOCALS  shift, and go to state 25
 
 
 State 24
 
-    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY . END_BODY
+    8 declaration: ident COLON ARRAY L_SQUARE_BRACKET . NUMBER R_SQUARE_BRACKET OF INTEGER
+    9            | ident COLON ARRAY L_SQUARE_BRACKET . NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
 
-    END_BODY  shift, and go to state 26
+    NUMBER  shift, and go to state 26
 
 
 State 25
 
-    8 declaration: identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF . INTEGER
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS . BEGIN_BODY statements END_BODY
 
-    INTEGER  shift, and go to state 27
+    BEGIN_BODY  shift, and go to state 27
 
 
 State 26
 
-    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY END_BODY .
+    8 declaration: ident COLON ARRAY L_SQUARE_BRACKET NUMBER . R_SQUARE_BRACKET OF INTEGER
+    9            | ident COLON ARRAY L_SQUARE_BRACKET NUMBER . R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
 
-    $default  reduce using rule 4 (function)
+    R_SQUARE_BRACKET  shift, and go to state 28
 
 
 State 27
 
-    8 declaration: identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER .
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY . statements END_BODY
+
+    READ   shift, and go to state 29
+    IF     shift, and go to state 30
+    WHILE  shift, and go to state 31
+    DO     shift, and go to state 32
+    IDENT  shift, and go to state 10
+
+    ident       go to state 33
+    statements  go to state 34
+    statement   go to state 35
+    var         go to state 36
+
+
+State 28
+
+    8 declaration: ident COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET . OF INTEGER
+    9            | ident COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET . L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
+
+    L_SQUARE_BRACKET  shift, and go to state 37
+    OF                shift, and go to state 38
+
+
+State 29
+
+   19 statement: READ . vars
+
+    IDENT  shift, and go to state 10
+
+    ident  go to state 33
+    var    go to state 39
+    vars   go to state 40
+
+
+State 30
+
+   15 statement: IF . bool_expression THEN statements SEMICOLON ENDIF
+   16          | IF . bool_expression THEN ELSE statements SEMICOLON ENDIF
+
+    COMMA    shift, and go to state 41
+    L_PAREN  shift, and go to state 42
+    NOT      shift, and go to state 43
+    TRUE     shift, and go to state 44
+    FALSE    shift, and go to state 45
+
+    bool_expression          go to state 46
+    relation_and_expression  go to state 47
+    relation_expression      go to state 48
+    expressions              go to state 49
+
+
+State 31
+
+   17 statement: WHILE . bool_expression BEGINLOOP statements SEMICOLON ENDLOOP
+
+    COMMA    shift, and go to state 41
+    L_PAREN  shift, and go to state 42
+    NOT      shift, and go to state 43
+    TRUE     shift, and go to state 44
+    FALSE    shift, and go to state 45
+
+    bool_expression          go to state 50
+    relation_and_expression  go to state 47
+    relation_expression      go to state 48
+    expressions              go to state 49
+
+
+State 32
+
+   18 statement: DO . BEGINLOOP statements SEMICOLON ENDLOOP WHILE bool_expression
+
+    BEGINLOOP  shift, and go to state 51
+
+
+State 33
+
+   38 var: ident .
+   39    | ident . L_SQUARE_BRACKET expression R_SQUARE_BRACKET
+   40    | ident . L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET
+
+    L_SQUARE_BRACKET  shift, and go to state 52
+
+    $default  reduce using rule 38 (var)
+
+
+State 34
+
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements . END_BODY
+
+    END_BODY  shift, and go to state 53
+
+
+State 35
+
+   12 statements: statement . SEMICOLON
+   13           | statement . SEMICOLON statements
+
+    SEMICOLON  shift, and go to state 54
+
+
+State 36
+
+   14 statement: var . ASSIGN expressions
+
+    ASSIGN  shift, and go to state 55
+
+
+State 37
+
+    9 declaration: ident COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET . NUMBER R_SQUARE_BRACKET OF INTEGER
+
+    NUMBER  shift, and go to state 56
+
+
+State 38
+
+    8 declaration: ident COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF . INTEGER
+
+    INTEGER  shift, and go to state 57
+
+
+State 39
+
+   41 vars: var .
+   42     | var . COMMA vars
+
+    COMMA  shift, and go to state 58
+
+    $default  reduce using rule 41 (vars)
+
+
+State 40
+
+   19 statement: READ vars .
+
+    $default  reduce using rule 19 (statement)
+
+
+State 41
+
+   44 expressions: COMMA . expression
+
+    PLUS   shift, and go to state 59
+    MINUS  shift, and go to state 60
+
+    expression                  go to state 61
+    multiplicative_expressions  go to state 62
+
+
+State 42
+
+   31 relation_expression: L_PAREN . bool_expression R_PAREN
+
+    COMMA    shift, and go to state 41
+    L_PAREN  shift, and go to state 42
+    NOT      shift, and go to state 43
+    TRUE     shift, and go to state 44
+    FALSE    shift, and go to state 45
+
+    bool_expression          go to state 63
+    relation_and_expression  go to state 47
+    relation_expression      go to state 48
+    expressions              go to state 49
+
+
+State 43
+
+   24 relation_expression: NOT . expressions comp expressions
+   25                    | NOT . TRUE
+   26                    | NOT . FALSE
+   27                    | NOT . L_PAREN bool_expression R_PAREN
+
+    COMMA    shift, and go to state 41
+    L_PAREN  shift, and go to state 64
+    TRUE     shift, and go to state 65
+    FALSE    shift, and go to state 66
+
+    expressions  go to state 67
+
+
+State 44
+
+   29 relation_expression: TRUE .
+
+    $default  reduce using rule 29 (relation_expression)
+
+
+State 45
+
+   30 relation_expression: FALSE .
+
+    $default  reduce using rule 30 (relation_expression)
+
+
+State 46
+
+   15 statement: IF bool_expression . THEN statements SEMICOLON ENDIF
+   16          | IF bool_expression . THEN ELSE statements SEMICOLON ENDIF
+
+    THEN  shift, and go to state 68
+
+
+State 47
+
+   20 bool_expression: relation_and_expression .
+   21                | relation_and_expression . OR relation_and_expression
+
+    OR  shift, and go to state 69
+
+    $default  reduce using rule 20 (bool_expression)
+
+
+State 48
+
+   22 relation_and_expression: relation_expression .
+   23                        | relation_expression . AND relation_expression
+
+    AND  shift, and go to state 70
+
+    $default  reduce using rule 22 (relation_and_expression)
+
+
+State 49
+
+   28 relation_expression: expressions . comp expressions
+
+    EQ   shift, and go to state 71
+    NEQ  shift, and go to state 72
+    LT   shift, and go to state 73
+    GT   shift, and go to state 74
+    GTE  shift, and go to state 75
+    LTE  shift, and go to state 76
+
+    comp  go to state 77
+
+
+State 50
+
+   17 statement: WHILE bool_expression . BEGINLOOP statements SEMICOLON ENDLOOP
+
+    BEGINLOOP  shift, and go to state 78
+
+
+State 51
+
+   18 statement: DO BEGINLOOP . statements SEMICOLON ENDLOOP WHILE bool_expression
+
+    READ   shift, and go to state 29
+    IF     shift, and go to state 30
+    WHILE  shift, and go to state 31
+    DO     shift, and go to state 32
+    IDENT  shift, and go to state 10
+
+    ident       go to state 33
+    statements  go to state 79
+    statement   go to state 35
+    var         go to state 36
+
+
+State 52
+
+   39 var: ident L_SQUARE_BRACKET . expression R_SQUARE_BRACKET
+   40    | ident L_SQUARE_BRACKET . expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET
+
+    PLUS   shift, and go to state 59
+    MINUS  shift, and go to state 60
+
+    expression                  go to state 80
+    multiplicative_expressions  go to state 62
+
+
+State 53
+
+    4 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY .
+
+    $default  reduce using rule 4 (function)
+
+
+State 54
+
+   12 statements: statement SEMICOLON .
+   13           | statement SEMICOLON . statements
+
+    READ   shift, and go to state 29
+    IF     shift, and go to state 30
+    WHILE  shift, and go to state 31
+    DO     shift, and go to state 32
+    IDENT  shift, and go to state 10
+
+    $default  reduce using rule 12 (statements)
+
+    ident       go to state 33
+    statements  go to state 81
+    statement   go to state 35
+    var         go to state 36
+
+
+State 55
+
+   14 statement: var ASSIGN . expressions
+
+    COMMA  shift, and go to state 41
+
+    expressions  go to state 82
+
+
+State 56
+
+    9 declaration: ident COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER . R_SQUARE_BRACKET OF INTEGER
+
+    R_SQUARE_BRACKET  shift, and go to state 83
+
+
+State 57
+
+    8 declaration: ident COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER .
 
     $default  reduce using rule 8 (declaration)
+
+
+State 58
+
+   42 vars: var COMMA . vars
+
+    IDENT  shift, and go to state 10
+
+    ident  go to state 33
+    var    go to state 39
+    vars   go to state 84
+
+
+State 59
+
+   46 multiplicative_expressions: PLUS . multiplicative_expression
+
+    MULT   shift, and go to state 85
+    DIV    shift, and go to state 86
+    MINUS  shift, and go to state 87
+    PER    shift, and go to state 88
+
+    multiplicative_expression  go to state 89
+    terms                      go to state 90
+
+
+State 60
+
+   47 multiplicative_expressions: MINUS . multiplicative_expression
+
+    MULT   shift, and go to state 85
+    DIV    shift, and go to state 86
+    MINUS  shift, and go to state 87
+    PER    shift, and go to state 88
+
+    multiplicative_expression  go to state 91
+    terms                      go to state 90
+
+
+State 61
+
+   44 expressions: COMMA expression .
+
+    $default  reduce using rule 44 (expressions)
+
+
+State 62
+
+   43 expression: multiplicative_expressions .
+
+    $default  reduce using rule 43 (expression)
+
+
+State 63
+
+   31 relation_expression: L_PAREN bool_expression . R_PAREN
+
+    R_PAREN  shift, and go to state 92
+
+
+State 64
+
+   27 relation_expression: NOT L_PAREN . bool_expression R_PAREN
+
+    COMMA    shift, and go to state 41
+    L_PAREN  shift, and go to state 42
+    NOT      shift, and go to state 43
+    TRUE     shift, and go to state 44
+    FALSE    shift, and go to state 45
+
+    bool_expression          go to state 93
+    relation_and_expression  go to state 47
+    relation_expression      go to state 48
+    expressions              go to state 49
+
+
+State 65
+
+   25 relation_expression: NOT TRUE .
+
+    $default  reduce using rule 25 (relation_expression)
+
+
+State 66
+
+   26 relation_expression: NOT FALSE .
+
+    $default  reduce using rule 26 (relation_expression)
+
+
+State 67
+
+   24 relation_expression: NOT expressions . comp expressions
+
+    EQ   shift, and go to state 71
+    NEQ  shift, and go to state 72
+    LT   shift, and go to state 73
+    GT   shift, and go to state 74
+    GTE  shift, and go to state 75
+    LTE  shift, and go to state 76
+
+    comp  go to state 94
+
+
+State 68
+
+   15 statement: IF bool_expression THEN . statements SEMICOLON ENDIF
+   16          | IF bool_expression THEN . ELSE statements SEMICOLON ENDIF
+
+    READ   shift, and go to state 29
+    ELSE   shift, and go to state 95
+    IF     shift, and go to state 30
+    WHILE  shift, and go to state 31
+    DO     shift, and go to state 32
+    IDENT  shift, and go to state 10
+
+    ident       go to state 33
+    statements  go to state 96
+    statement   go to state 35
+    var         go to state 36
+
+
+State 69
+
+   21 bool_expression: relation_and_expression OR . relation_and_expression
+
+    COMMA    shift, and go to state 41
+    L_PAREN  shift, and go to state 42
+    NOT      shift, and go to state 43
+    TRUE     shift, and go to state 44
+    FALSE    shift, and go to state 45
+
+    relation_and_expression  go to state 97
+    relation_expression      go to state 48
+    expressions              go to state 49
+
+
+State 70
+
+   23 relation_and_expression: relation_expression AND . relation_expression
+
+    COMMA    shift, and go to state 41
+    L_PAREN  shift, and go to state 42
+    NOT      shift, and go to state 43
+    TRUE     shift, and go to state 44
+    FALSE    shift, and go to state 45
+
+    relation_expression  go to state 98
+    expressions          go to state 49
+
+
+State 71
+
+   32 comp: EQ .
+
+    $default  reduce using rule 32 (comp)
+
+
+State 72
+
+   33 comp: NEQ .
+
+    $default  reduce using rule 33 (comp)
+
+
+State 73
+
+   34 comp: LT .
+
+    $default  reduce using rule 34 (comp)
+
+
+State 74
+
+   35 comp: GT .
+
+    $default  reduce using rule 35 (comp)
+
+
+State 75
+
+   36 comp: GTE .
+
+    $default  reduce using rule 36 (comp)
+
+
+State 76
+
+   37 comp: LTE .
+
+    $default  reduce using rule 37 (comp)
+
+
+State 77
+
+   28 relation_expression: expressions comp . expressions
+
+    COMMA  shift, and go to state 41
+
+    expressions  go to state 99
+
+
+State 78
+
+   17 statement: WHILE bool_expression BEGINLOOP . statements SEMICOLON ENDLOOP
+
+    READ   shift, and go to state 29
+    IF     shift, and go to state 30
+    WHILE  shift, and go to state 31
+    DO     shift, and go to state 32
+    IDENT  shift, and go to state 10
+
+    ident       go to state 33
+    statements  go to state 100
+    statement   go to state 35
+    var         go to state 36
+
+
+State 79
+
+   18 statement: DO BEGINLOOP statements . SEMICOLON ENDLOOP WHILE bool_expression
+
+    SEMICOLON  shift, and go to state 101
+
+
+State 80
+
+   39 var: ident L_SQUARE_BRACKET expression . R_SQUARE_BRACKET
+   40    | ident L_SQUARE_BRACKET expression . R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET
+
+    R_SQUARE_BRACKET  shift, and go to state 102
+
+
+State 81
+
+   13 statements: statement SEMICOLON statements .
+
+    $default  reduce using rule 13 (statements)
+
+
+State 82
+
+   14 statement: var ASSIGN expressions .
+
+    $default  reduce using rule 14 (statement)
+
+
+State 83
+
+    9 declaration: ident COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET . OF INTEGER
+
+    OF  shift, and go to state 103
+
+
+State 84
+
+   42 vars: var COMMA vars .
+
+    $default  reduce using rule 42 (vars)
+
+
+State 85
+
+   52 terms: MULT . term
+
+    L_PAREN  shift, and go to state 104
+    IDENT    shift, and go to state 10
+    NUMBER   shift, and go to state 105
+
+    ident  go to state 106
+    var    go to state 107
+    term   go to state 108
+
+
+State 86
+
+   53 terms: DIV . term
+
+    L_PAREN  shift, and go to state 104
+    IDENT    shift, and go to state 10
+    NUMBER   shift, and go to state 105
+
+    ident  go to state 106
+    var    go to state 107
+    term   go to state 109
+
+
+State 87
+
+   55 terms: MINUS . term
+
+    L_PAREN  shift, and go to state 104
+    IDENT    shift, and go to state 10
+    NUMBER   shift, and go to state 105
+
+    ident  go to state 106
+    var    go to state 107
+    term   go to state 110
+
+
+State 88
+
+   54 terms: PER . term
+
+    L_PAREN  shift, and go to state 104
+    IDENT    shift, and go to state 10
+    NUMBER   shift, and go to state 105
+
+    ident  go to state 106
+    var    go to state 107
+    term   go to state 111
+
+
+State 89
+
+   46 multiplicative_expressions: PLUS multiplicative_expression .
+
+    $default  reduce using rule 46 (multiplicative_expressions)
+
+
+State 90
+
+   45 multiplicative_expression: terms .
+
+    $default  reduce using rule 45 (multiplicative_expression)
+
+
+State 91
+
+   47 multiplicative_expressions: MINUS multiplicative_expression .
+
+    $default  reduce using rule 47 (multiplicative_expressions)
+
+
+State 92
+
+   31 relation_expression: L_PAREN bool_expression R_PAREN .
+
+    $default  reduce using rule 31 (relation_expression)
+
+
+State 93
+
+   27 relation_expression: NOT L_PAREN bool_expression . R_PAREN
+
+    R_PAREN  shift, and go to state 112
+
+
+State 94
+
+   24 relation_expression: NOT expressions comp . expressions
+
+    COMMA  shift, and go to state 41
+
+    expressions  go to state 113
+
+
+State 95
+
+   16 statement: IF bool_expression THEN ELSE . statements SEMICOLON ENDIF
+
+    READ   shift, and go to state 29
+    IF     shift, and go to state 30
+    WHILE  shift, and go to state 31
+    DO     shift, and go to state 32
+    IDENT  shift, and go to state 10
+
+    ident       go to state 33
+    statements  go to state 114
+    statement   go to state 35
+    var         go to state 36
+
+
+State 96
+
+   15 statement: IF bool_expression THEN statements . SEMICOLON ENDIF
+
+    SEMICOLON  shift, and go to state 115
+
+
+State 97
+
+   21 bool_expression: relation_and_expression OR relation_and_expression .
+
+    $default  reduce using rule 21 (bool_expression)
+
+
+State 98
+
+   23 relation_and_expression: relation_expression AND relation_expression .
+
+    $default  reduce using rule 23 (relation_and_expression)
+
+
+State 99
+
+   28 relation_expression: expressions comp expressions .
+
+    $default  reduce using rule 28 (relation_expression)
+
+
+State 100
+
+   17 statement: WHILE bool_expression BEGINLOOP statements . SEMICOLON ENDLOOP
+
+    SEMICOLON  shift, and go to state 116
+
+
+State 101
+
+   18 statement: DO BEGINLOOP statements SEMICOLON . ENDLOOP WHILE bool_expression
+
+    ENDLOOP  shift, and go to state 117
+
+
+State 102
+
+   39 var: ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET .
+   40    | ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET . L_SQUARE_BRACKET expression R_SQUARE_BRACKET
+
+    L_SQUARE_BRACKET  shift, and go to state 118
+
+    $default  reduce using rule 39 (var)
+
+
+State 103
+
+    9 declaration: ident COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF . INTEGER
+
+    INTEGER  shift, and go to state 119
+
+
+State 104
+
+   51 term: L_PAREN . expressions R_PAREN
+
+    COMMA  shift, and go to state 41
+
+    expressions  go to state 120
+
+
+State 105
+
+   50 term: NUMBER .
+
+    $default  reduce using rule 50 (term)
+
+
+State 106
+
+   38 var: ident .
+   39    | ident . L_SQUARE_BRACKET expression R_SQUARE_BRACKET
+   40    | ident . L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET
+   48 term: ident . L_PAREN expressions R_PAREN
+
+    L_SQUARE_BRACKET  shift, and go to state 52
+    L_PAREN           shift, and go to state 121
+
+    $default  reduce using rule 38 (var)
+
+
+State 107
+
+   49 term: var .
+
+    $default  reduce using rule 49 (term)
+
+
+State 108
+
+   52 terms: MULT term .
+
+    $default  reduce using rule 52 (terms)
+
+
+State 109
+
+   53 terms: DIV term .
+
+    $default  reduce using rule 53 (terms)
+
+
+State 110
+
+   55 terms: MINUS term .
+
+    $default  reduce using rule 55 (terms)
+
+
+State 111
+
+   54 terms: PER term .
+
+    $default  reduce using rule 54 (terms)
+
+
+State 112
+
+   27 relation_expression: NOT L_PAREN bool_expression R_PAREN .
+
+    $default  reduce using rule 27 (relation_expression)
+
+
+State 113
+
+   24 relation_expression: NOT expressions comp expressions .
+
+    $default  reduce using rule 24 (relation_expression)
+
+
+State 114
+
+   16 statement: IF bool_expression THEN ELSE statements . SEMICOLON ENDIF
+
+    SEMICOLON  shift, and go to state 122
+
+
+State 115
+
+   15 statement: IF bool_expression THEN statements SEMICOLON . ENDIF
+
+    ENDIF  shift, and go to state 123
+
+
+State 116
+
+   17 statement: WHILE bool_expression BEGINLOOP statements SEMICOLON . ENDLOOP
+
+    ENDLOOP  shift, and go to state 124
+
+
+State 117
+
+   18 statement: DO BEGINLOOP statements SEMICOLON ENDLOOP . WHILE bool_expression
+
+    WHILE  shift, and go to state 125
+
+
+State 118
+
+   40 var: ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET . expression R_SQUARE_BRACKET
+
+    PLUS   shift, and go to state 59
+    MINUS  shift, and go to state 60
+
+    expression                  go to state 126
+    multiplicative_expressions  go to state 62
+
+
+State 119
+
+    9 declaration: ident COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER .
+
+    $default  reduce using rule 9 (declaration)
+
+
+State 120
+
+   51 term: L_PAREN expressions . R_PAREN
+
+    R_PAREN  shift, and go to state 127
+
+
+State 121
+
+   48 term: ident L_PAREN . expressions R_PAREN
+
+    COMMA  shift, and go to state 41
+
+    expressions  go to state 128
+
+
+State 122
+
+   16 statement: IF bool_expression THEN ELSE statements SEMICOLON . ENDIF
+
+    ENDIF  shift, and go to state 129
+
+
+State 123
+
+   15 statement: IF bool_expression THEN statements SEMICOLON ENDIF .
+
+    $default  reduce using rule 15 (statement)
+
+
+State 124
+
+   17 statement: WHILE bool_expression BEGINLOOP statements SEMICOLON ENDLOOP .
+
+    $default  reduce using rule 17 (statement)
+
+
+State 125
+
+   18 statement: DO BEGINLOOP statements SEMICOLON ENDLOOP WHILE . bool_expression
+
+    COMMA    shift, and go to state 41
+    L_PAREN  shift, and go to state 42
+    NOT      shift, and go to state 43
+    TRUE     shift, and go to state 44
+    FALSE    shift, and go to state 45
+
+    bool_expression          go to state 130
+    relation_and_expression  go to state 47
+    relation_expression      go to state 48
+    expressions              go to state 49
+
+
+State 126
+
+   40 var: ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression . R_SQUARE_BRACKET
+
+    R_SQUARE_BRACKET  shift, and go to state 131
+
+
+State 127
+
+   51 term: L_PAREN expressions R_PAREN .
+
+    $default  reduce using rule 51 (term)
+
+
+State 128
+
+   48 term: ident L_PAREN expressions . R_PAREN
+
+    R_PAREN  shift, and go to state 132
+
+
+State 129
+
+   16 statement: IF bool_expression THEN ELSE statements SEMICOLON ENDIF .
+
+    $default  reduce using rule 16 (statement)
+
+
+State 130
+
+   18 statement: DO BEGINLOOP statements SEMICOLON ENDLOOP WHILE bool_expression .
+
+    $default  reduce using rule 18 (statement)
+
+
+State 131
+
+   40 var: ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET .
+
+    $default  reduce using rule 40 (var)
+
+
+State 132
+
+   48 term: ident L_PAREN expressions R_PAREN .
+
+    $default  reduce using rule 48 (term)

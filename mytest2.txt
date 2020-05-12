@@ -1,4 +1,4 @@
-n test1;
+function;
 beginparams
 endparams
 beginlocals

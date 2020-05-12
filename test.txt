@@ -4,12 +4,11 @@ endparams
 n : interger;
 beginlocals 
 n : integer;
-a : array[1000] of integer;	## prime candidates array
+a : array[1000] of integer;
 i, j : integer;
 x, sqrt_n : integer;
 endlocals 
-beginbody	## main program
-    ## compute the square root of n and put the result in sqrt_n
+beginbody
     read n;
     x := n;
     while x > n / x beginloop
