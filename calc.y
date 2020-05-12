@@ -51,8 +51,8 @@ declaration: ident COLON INTEGER
         ;
 
 ident: IDENT 
-	   {printf("identifiers->IDENT\n");}
-          | IDENT COMMA ident 
+	   {printf("ident->IDENT\n");}
+          | IDENT COMMA ident  
 	  {printf("ident->IDENT COMMA ident\n");}
          ;
 statements: statement SEMICOLON
@@ -71,9 +71,9 @@ statement: var ASSIGN expressions
          | DO BEGINLOOP statements SEMICOLON ENDLOOP WHILE bool_expression
          {printf("statement->DO BEGINLOOP statements SEMICOLON ENDLOOP WHILE bool_expression\n");}
          | READ vars
-         {printf("statement->READ Vars\n");}
+         {printf("statement->READ var\n");}
          | WRITE vars
-         {printf("statement->WRITE Vars\n");}
+         {printf("statement->WRITE vars\n");}
          | CONTINUE
          {printf("statement->CONTINUE\n");}
          | RETURN expressions
@@ -123,7 +123,7 @@ comp: EQ
     {printf("comp->LTE\n");}
    ;
 
-var: ident
+var: ident SEMICOLON
     {printf("Var->identifiers\n");}
     | ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET 
     {printf("Var->identifiers L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
@@ -131,11 +131,11 @@ var: ident
     {printf("Var->identifiers L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
     ;
 
-vars: var 
-    {printf("Vars->var\n");}
-    | var COMMA vars 
-    {printf("var COMMA Vars\n");}
-    ;
+vars: var
+    {printf("vars->var\n");}
+    | vars COMMA var
+    {printf("vars->vars COMMA var\n");}
+   ;
 expression: multiplicative_expressions  
 	  {printf("expression->multiplicative_expression\n");}
          
@@ -156,7 +156,7 @@ multiplicative_expressions: PLUS multiplicative_expression
 
 term: ident L_PAREN expressions R_PAREN 
     {printf("term->identifier L_PAREN expressions R_PAREN\n");}
-    | var
+    | var 
     {printf("term->Var\n");}
     | NUMBER 
     {printf("term->NUMBER\n");}
