@@ -1,7 +1,7 @@
-function main;
+function main
 beginparams
+n : integer;
 endparams
-n : interger;
 beginlocals 
 n : integer;
 a : array[1000] of integer;
@@ -18,3 +18,4 @@ beginbody
     ## initialization of the array
     i := 2;
     while i <= n beginloop
+endbody
