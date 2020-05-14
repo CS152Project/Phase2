@@ -1,0 +1,14 @@
+function main;
+beginparams
+myNum  integer;
+yourNum : integer;
+endparams
+beginlocals
+aNum : integer;
+endlocals;
+beginbody
+read aNum;
+endbody
+
+
+

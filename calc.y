@@ -36,7 +36,7 @@ functions: /*epsilon*/
        ;
 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
 	{printf("function->FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY\n");}
-	| error IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
+	/*| error IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
 	{printf("syntax error: missing FUNCTION\n");}
 	| FUNCTION error SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
 	{printf("syntax error: missing IDENT\n");}
@@ -55,13 +55,19 @@ function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LO
 	| FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY error END_BODY
 	{printf("syntax error: missing statements\n");}
 	| FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements error
-	{printf("syntax error: missing END_BODY\n");}
+	{printf("syntax error: missing END_BODY\n");}*/
        ; 
 
 declarations: /*epsilon*/
 	   {printf("declarations->epsilon\n");}
         | declaration SEMICOLON declarations 
            {printf("declarations->declaration SEMICOLON declarations\n");}
+	| error SEMICOLON declarations
+	{printf("Syntax error: Missing declaration at line %d, position %d\n", currLine, currPos);}
+	| declaration error declarations
+	{printf("Syntax error: Missing SEMICOLON at line %d, position %d\n", currLine, currPos);}
+	| declaration SEMICOLON error
+	{printf("Syntax error: Missing declarations at line %d, position %d\n", currLine, currPos);}
 	;
 declaration: ident COLON INTEGER
            {printf("declaration->identifiers SEMICOLON INTEGER\n");}
@@ -69,6 +75,8 @@ declaration: ident COLON INTEGER
 	  {printf("declaration->identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n");}
         | ident COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
 	  {printf("declaration->identifiers SEMICOLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n");}
+	| error COLON INTEGER
+	  {printf("Syntax error: Missing ident at line %d, position %d\n", currLine, currPos);}
         ;
 
 ident: IDENT 
