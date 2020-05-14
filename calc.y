@@ -174,6 +174,10 @@ multiplicative_expression: term
 			{printf("Syntax error: Missing first term for multiplication at line %d, position %d\n", currLine, currPos);}
 			| term MULT error
 			{printf("Syntax error: Missing second term for multiplication at line %d, position %d\n", currLine, currPos);}
+			| error DIV term
+			{printf("Syntax error: Missing first term for division at line %d, position %d\n", currLine, currPos);}
+			| term DIV error
+			{printf("Syntax error: Missing second term for division at line %d, position %d\n", currLine, currPos);}
                         ;
 
 
