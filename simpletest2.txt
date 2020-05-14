@@ -1,0 +1,22 @@
+function main;
+beginparams
+myNum : integer;
+yourNum integer
+t, r : integer;
+endparams
+beginlocals
+a integer;
+b : integer;
+x : array[100] of integer;
+y array[100] of integer; 
+endlocals
+beginbody
+read a;
+i := 2;
+a := a + 1;
+if a == i then
+	a := a + 1;
+endif;
+write a;
+endbody
+

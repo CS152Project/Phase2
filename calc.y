@@ -71,8 +71,6 @@ statements: statement SEMICOLON
 	  {printf("statements->statement SEMICOLON\n");}
          | statement SEMICOLON statements
           {printf("statement->statement SEMICOLON statements\n");}
-         | error SEMICOLON statements 
-          {printf("syntax error: missing statement at line %d, position %d\n", currLine, currPos);}
          ;
 statement: var ASSIGN expressions
 	 {printf("statement->Var ASSIGN expression\n");}
@@ -100,7 +98,6 @@ bool_expression: relation_and_expression
 		{printf("bool_expression->relation_and_expression\n");}
               | relation_and_expression OR relation_and_expression
                 {printf("bool_expression->relation_and_expression OR relation_and_expression\n");}
-              
          ;
 relation_and_expression: relation_expression
 		       {printf("relation_and_expression->relation_expression\n");}
@@ -123,6 +120,8 @@ relation_expression: NOT expressions comp expressions
                  {printf("relation_expression->FALSE\n");}
                  | L_PAREN bool_expression R_PAREN
                  {printf("relation_expression->L_PAREN bool_expressions R_PAREN\n");}
+		| NOT expressions error expressions
+		{printf("Syntax error: Missing comp at line %d, position %d\n", currLine, currPos);}
          ;
 
 comp: EQ
@@ -171,6 +170,10 @@ multiplicative_expression: term
                          {printf("multiplicative_expression->term DIV term\n");}
                         | term PER term
                          {printf("multiplicative_expression->term PER term\n");}
+			| error MULT term
+			{printf("Syntax error: Missing first term for multiplication at line %d, position %d\n", currLine, currPos);}
+			| term MULT error
+			{printf("Syntax error: Missing second term for multiplication at line %d, position %d\n", currLine, currPos);}
                         ;
 
 
