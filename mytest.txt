@@ -5,23 +5,24 @@ yourNum : integer;
 endparams
 beginlocals
 aNum : integer;
-bNum integer;
+bNum : integer;
 x integer;
 x : array[1000] of integer;
 y array[1000] of integer;
-  : integer;
+z : integer;
 xNum : integer;
-yNum  integer;
+yNum : integer; 
 i : integer; 
-     , yNum[i] 
 endlocals
 beginbody
 while i <=n beginloop
      if a[i] == 1 then
         write i;
-        read ;   
+        read ;   ## no variable for read here 
      endif;
 i := i + 1;
+b[ ] := [15+6];
 endloop;
+      [1000 + 7];   ## missing identifier here 
 endbody
 

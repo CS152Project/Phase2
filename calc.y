@@ -151,8 +151,14 @@ var: IDENT
     {printf("var->IDENT\n");}
     | IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET 
     {printf("var->ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
+    | error L_SQUARE_BRACKET expression R_SQUARE_BRACKET
+    {printf("syntax error: missing identifier in line %d, position %d\n", currLine, currPos);}
     | IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET
     {printf("var->ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");} 
+    | IDENT L_SQUARE_BRACKET error R_SQUARE_BRACKET
+    {printf("syntax error: missing expression in line %d, position %d\n", currLine, currPos);} 
+    | IDENT L_SQUARE_BRACKET error R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET
+    {printf("syntax error: missing expression in line %d, position %d\n", currLine, currPos);} 
     ;
 
 vars: var
