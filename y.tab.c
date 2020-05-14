@@ -498,7 +498,7 @@ static const yytype_uint8 yyrline[] =
      117,   119,   121,   123,   127,   129,   131,   133,   135,   137,
      141,   143,   145,   149,   151,   154,   156,   158,   161,   165,
      167,   169,   171,   173,   175,   177,   179,   181,   183,   185,
-     187,   189,   195,   197,   199,   201,   203,   205,   207
+     187,   189,   194,   196,   198,   200,   202,   204,   206
 };
 #endif
 
@@ -1812,43 +1812,43 @@ yyreduce:
     break;
 
   case 72:
-#line 196 "calc.y" /* yacc.c:1646  */
+#line 195 "calc.y" /* yacc.c:1646  */
     {printf("term->identifier L_PAREN expressions R_PAREN\n");}
 #line 1818 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 198 "calc.y" /* yacc.c:1646  */
+#line 197 "calc.y" /* yacc.c:1646  */
     {printf("term->Var\n");}
 #line 1824 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 200 "calc.y" /* yacc.c:1646  */
+#line 199 "calc.y" /* yacc.c:1646  */
     {printf("term->NUMBER\n");}
 #line 1830 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 202 "calc.y" /* yacc.c:1646  */
+#line 201 "calc.y" /* yacc.c:1646  */
     {printf("term->L_PAREN expressions R_PAREN\n");}
 #line 1836 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 204 "calc.y" /* yacc.c:1646  */
+#line 203 "calc.y" /* yacc.c:1646  */
     {printf("term->MINUS var\n");}
 #line 1842 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 206 "calc.y" /* yacc.c:1646  */
+#line 205 "calc.y" /* yacc.c:1646  */
     {printf("term->MINUS NUMBER\n");}
 #line 1848 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 208 "calc.y" /* yacc.c:1646  */
+#line 207 "calc.y" /* yacc.c:1646  */
     {printf("term->MINUS L_PAREN expressions R_PAREN\n");}
 #line 1854 "y.tab.c" /* yacc.c:1646  */
     break;
@@ -2082,7 +2082,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 211 "calc.y" /* yacc.c:1906  */
+#line 210 "calc.y" /* yacc.c:1906  */
 
 
 int main(int argc, char ** argv)

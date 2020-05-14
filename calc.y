@@ -188,7 +188,6 @@ multiplicative_expression: term
 			{printf("Syntax error: No terms for DIV available at line %d\n", currLine);}
 			| error PER error
 			{printf("Syntax error: No terms for PER available at line %d\n", currLine);}
-
                         ;
 
 
