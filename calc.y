@@ -71,6 +71,8 @@ statements: statement SEMICOLON
 	  {printf("statements->statement SEMICOLON\n");}
          | statement SEMICOLON statements
           {printf("statement->statement SEMICOLON statements\n");}
+         | error SEMICOLON statements 
+          {printf("syntax error: missing statement at line %d, position %d\n", currLine, currPos);}
          ;
 statement: var ASSIGN expressions
 	 {printf("statement->Var ASSIGN expression\n");}

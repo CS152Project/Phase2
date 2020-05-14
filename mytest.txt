@@ -10,11 +10,10 @@ x integer;
 x : array[1000] of integer;
 y array[1000] of integer;
 xNum : integer;
-yNum integer
+yNum  integer;
 endlocals
 beginody
 read aNum;
-write bNum;
-
+x ; 
 endbody
 
