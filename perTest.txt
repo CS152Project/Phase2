@@ -4,9 +4,14 @@ endparams
 beginlocals
 a : integer;
 b : integer;
+c : integer;
 endlocals
 beginbody
 a := 6;
-b := 3;
-a := a % b;
+b := 4;
+
+c := a % b;
+c := % b;
+c := a % ;
+c := %;
 endbody

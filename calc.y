@@ -182,6 +182,13 @@ multiplicative_expression: term
 			{printf("Syntax error: Missing first term for modulus at line %d, position %d\n", currLine, currPos);}
 			| term PER error
 			{printf("Syntax error: Missing second term for modulus at line %d, position %d\n", currLine, currPos);}
+			| error MULT error
+			{printf("Syntax error: No terms for MULT available at line %d\n", currLine);}
+			| error DIV error
+			{printf("Syntax error: No terms for DIV available at line %d\n", currLine);}
+			| error PER error
+			{printf("Syntax error: No terms for PER available at line %d\n", currLine);}
+
                         ;
 
 
