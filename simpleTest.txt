@@ -2,6 +2,7 @@ function main;
 beginparams
 myNum  integer;
 yourNum : integer;
+thisNum : integer;
 endparams
 beginlocals
 aNum : integer;
