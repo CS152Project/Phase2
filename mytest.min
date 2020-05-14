@@ -22,8 +22,9 @@ beginbody
        if k% 2 == 0 then
            Continue;
        endif;
+           write;
        write t [k-1];
-    endloop
+    endloop;
   while k <n;
 
   if i <j and j <n and i> = 0 then

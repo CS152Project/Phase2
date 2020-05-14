@@ -71,8 +71,12 @@ statements: statement SEMICOLON
 	  {printf("statements->statement SEMICOLON\n");}
          | statement SEMICOLON statements
           {printf("statement->statement SEMICOLON statements\n");}
-         | error SEMICOLON statements 
+         | statement SEMICOLON error  
+          {printf("syntax error: missing statements at line %d, position %d\n", currLine, currPos);}
+         | error SEMICOLON statements
           {printf("syntax error: missing statement at line %d, position %d\n", currLine, currPos);}
+         | statement error statements
+          {printf("syntax error: missing SEMICOLON at line %d, position %d\n", currLine, currPos);} 
          ;
 statement: var ASSIGN expressions
 	 {printf("statement->Var ASSIGN expression\n");}
@@ -88,8 +92,12 @@ statement: var ASSIGN expressions
          {printf("statement->FOR vars ASSIGN NUMBER SEMICOLON bool_expression SEMICOLON vars ASSIGN expressions BEGINLOOP statements SEMICOLON ENDLOOP\n");}
          | READ vars 
          {printf("statement->READ var\n");}
+         | READ error
+         {printf("syntax error: no varables at line %d, position %d\n", currLine, currPos);}
          | WRITE vars
-         {printf("statement->WRITE vars\n");}
+         {printf("statement->WRITE vars\n");} 
+         | WRITE error
+         {printf("syntax error: no variable at line %d, position %d\n", currLine, currPos);}
          | CONTINUE
          {printf("statement->CONTINUE\n");}
          | RETURN expressions
@@ -144,13 +152,18 @@ var: IDENT
     | IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET 
     {printf("var->ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
     | IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET
-    {printf("var->ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
+    {printf("var->ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");} 
     ;
 
 vars: var
     {printf("vars->var\n");}
     | var COMMA vars
     {printf("vars->var COMMA vars\n");}
+    | error COMMA vars
+    {printf("syntax error: missing variable in line %d, position %d\n", currLine, currPos);}
+    | var COMMA error
+    {printf("syntax error: missing variables in line %d, position %d\n", currLine, currPos);}
+     
    ;
 expression: multiplicative_expression  
 	  {printf("expression->multiplicative_expression\n");}

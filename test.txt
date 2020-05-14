@@ -4,12 +4,12 @@ endparams
 n : interger;
 beginlocals 
 n : integer;
-a : array[1000] of integer;
+a : array1000] of integer;
 i, j : integer;
 x, sqrt_n : integer;
 endlocals 
 beginbody
-    read n
+    read; 
     x := n;
     while x > n / x beginloop
 	    x := (x+n / x) / 2;
@@ -18,3 +18,5 @@ beginbody
     ## initialization of the array
     i := 2;
     while i <= n beginloop
+endif;
+endbody

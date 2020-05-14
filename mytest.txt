@@ -9,11 +9,19 @@ bNum integer;
 x integer;
 x : array[1000] of integer;
 y array[1000] of integer;
+  : integer;
 xNum : integer;
 yNum  integer;
+i : integer; 
+     , yNum[i] 
 endlocals
-beginody
-read aNum;
-x ; 
+beginbody
+while i <=n beginloop
+     if a[i] == 1 then
+        write i;
+        read ;   
+     endif;
+i := i + 1;
+endloop;
 endbody
 

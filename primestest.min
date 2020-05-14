@@ -2,9 +2,9 @@ function main;
 beginparams
 endparams
 beginlocals
-n : integer;
-a : array[1000] of integer; 
-i, j : integer;
+n  integer;
+a array[1000] of integer; 
+i j : iteger;
 x, sqrt_n : integer;
 endlocals
 beginbody	
@@ -16,14 +16,13 @@ beginbody
     sqrt_n := x;
     i := 2;
     while i <= n beginloop
-	    a[i] := 0;
-	    i := i + 1;
+	    
     endloop;
     i := 2;
     while i <= sqrt_n beginloop
 	    if a[i] == 0 then
           ## i prime, so eliminate its multiples
-	       j := i+i;
+	       j := i+i
 	       while j <= n beginloop
 		       a[j] := 1;
 		       j := j+i;
@@ -35,7 +34,8 @@ beginbody
     while i <= n beginloop
 	    if a[i] == 0 then
 	       write i;
+            else 
+               write j 
        endif;
-       i := i + 1;
    endloop;
 endbody
