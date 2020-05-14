@@ -40,7 +40,13 @@ function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LO
 declarations: /*epsilon*/
 	   {printf("declarations->epsilon\n");}
         | declaration SEMICOLON declarations 
-           {printf("declarations->declaration SEMICOLON declarations\n");}
+           {printf("declarations->declaration SEMICOLON declarations\n");} 
+        | error SEMICOLON declarations
+           {printf("syntax error: Missing declaration at line %d, position %d\n", currLine, currPos);}
+        | declaration error declarations 
+           {printf("syntax error: Missing SEMICOLON at line %d, position %d\n", currLine, currPos);} 
+        | declaration SEMICOLON error
+           {printf("syntax error: Missing declarations at line %d, position %d\n", currLine, currPos);}
 	;
 declaration: ident COLON INTEGER
            {printf("declaration->identifiers SEMICOLON INTEGER\n");}
@@ -48,6 +54,12 @@ declaration: ident COLON INTEGER
 	  {printf("declaration->identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n");}
         | ident COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
 	  {printf("declaration->identifiers SEMICOLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n");}
+        | error COLON INTEGER
+          {printf("syntax error: missing identifier at line %d, position %d\n", currLine, currPos);}
+        | ident error INTEGER 
+          {printf("syntax error: missing COLON at line %d, position %d\n", currLine, currPos);}
+        | ident COLON error 
+          {printf("syntax error: missing INTEGER at line %d, position %d\n", currLine, currPos);} 
         ;
 
 ident: IDENT 
@@ -79,7 +91,7 @@ statement: var ASSIGN expressions
          | CONTINUE
          {printf("statement->CONTINUE\n");}
          | RETURN expressions
-         {printf("statement->RETURN expressions\n");}
+         {printf("statement->RETURN expressions\n");} 
          ;
 
 bool_expression: relation_and_expression
@@ -110,7 +122,6 @@ relation_expression: NOT expressions comp expressions
                  | L_PAREN bool_expression R_PAREN
                  {printf("relation_expression->L_PAREN bool_expressions R_PAREN\n");}
          ;
-
 
 comp: EQ
     {printf("comp->EQ\n");}

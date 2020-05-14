@@ -1,11 +1,20 @@
-function test;
+function main;
 beginparams
+myNum : integer;
+yourNum : integer;
 endparams
 beginlocals
-n : integer;
+aNum : integer;
+bNum integer;
+x integer;
+x : array[1000] of integer;
+y array[1000] of integer;
+xNum : integer;
+yNum integer
 endlocals
-beginbody
-read n;
-n := n + 1?
-write n;
+beginody
+read aNum;
+write bNum;
+
 endbody
+

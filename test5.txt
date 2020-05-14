@@ -1,0 +1,12 @@
+function;
+beginparams
+x := integer;
+a : [6] array of integer
+b := integer; 
+endparams
+beginlocals
+a  integer;
+endlocals
+beginbody
+a = 1 + 2 * 3;
+endbody
