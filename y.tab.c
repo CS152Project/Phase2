@@ -491,13 +491,13 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    29,    29,    33,    34,    37,    62,    63,    65,    67,
-      69,    72,    74,    76,    78,    82,    84,    87,    89,    92,
-      94,    96,    98,   100,   102,   104,   106,   108,   110,   114,
-     116,   120,   122,   125,   127,   129,   131,   133,   135,   137,
-     139,   144,   146,   148,   150,   152,   154,   158,   160,   162,
-     166,   168,   171,   173,   175,   178,   182,   184,   186,   188,
-     193,   195,   197,   199,   201,   203,   205
+       0,    29,    29,    33,    34,    37,    42,    43,    45,    47,
+      49,    52,    54,    56,    58,    62,    64,    67,    69,    72,
+      74,    76,    78,    80,    82,    84,    86,    88,    90,    94,
+      96,   100,   102,   105,   107,   109,   111,   113,   115,   117,
+     119,   124,   126,   128,   130,   132,   134,   138,   140,   142,
+     146,   148,   151,   153,   155,   158,   162,   164,   166,   168,
+     173,   175,   177,   179,   181,   183,   185
 };
 #endif
 
@@ -1397,367 +1397,367 @@ yyreduce:
     break;
 
   case 6:
-#line 62 "calc.y" /* yacc.c:1646  */
+#line 42 "calc.y" /* yacc.c:1646  */
     {printf("declarations->epsilon\n");}
 #line 1403 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 64 "calc.y" /* yacc.c:1646  */
+#line 44 "calc.y" /* yacc.c:1646  */
     {printf("declarations->declaration SEMICOLON declarations\n");}
 #line 1409 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 66 "calc.y" /* yacc.c:1646  */
+#line 46 "calc.y" /* yacc.c:1646  */
     {printf("Syntax error: Missing declaration at line %d, position %d\n", currLine, currPos);}
 #line 1415 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 68 "calc.y" /* yacc.c:1646  */
+#line 48 "calc.y" /* yacc.c:1646  */
     {printf("Syntax error: Missing SEMICOLON at line %d, position %d\n", currLine, currPos);}
 #line 1421 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 70 "calc.y" /* yacc.c:1646  */
+#line 50 "calc.y" /* yacc.c:1646  */
     {printf("Syntax error: Missing declarations at line %d, position %d\n", currLine, currPos);}
 #line 1427 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 73 "calc.y" /* yacc.c:1646  */
+#line 53 "calc.y" /* yacc.c:1646  */
     {printf("declaration->identifiers SEMICOLON INTEGER\n");}
 #line 1433 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 75 "calc.y" /* yacc.c:1646  */
+#line 55 "calc.y" /* yacc.c:1646  */
     {printf("declaration->identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n");}
 #line 1439 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 77 "calc.y" /* yacc.c:1646  */
+#line 57 "calc.y" /* yacc.c:1646  */
     {printf("declaration->identifiers SEMICOLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n");}
 #line 1445 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 79 "calc.y" /* yacc.c:1646  */
+#line 59 "calc.y" /* yacc.c:1646  */
     {printf("Syntax error: Missing ident at line %d, position %d\n", currLine, currPos);}
 #line 1451 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 83 "calc.y" /* yacc.c:1646  */
+#line 63 "calc.y" /* yacc.c:1646  */
     {printf("ident->IDENT\n");}
 #line 1457 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 85 "calc.y" /* yacc.c:1646  */
+#line 65 "calc.y" /* yacc.c:1646  */
     {printf("ident->IDENT COMMA ident\n");}
 #line 1463 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 88 "calc.y" /* yacc.c:1646  */
+#line 68 "calc.y" /* yacc.c:1646  */
     {printf("statements->statement SEMICOLON\n");}
 #line 1469 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 90 "calc.y" /* yacc.c:1646  */
+#line 70 "calc.y" /* yacc.c:1646  */
     {printf("statement->statement SEMICOLON statements\n");}
 #line 1475 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 93 "calc.y" /* yacc.c:1646  */
+#line 73 "calc.y" /* yacc.c:1646  */
     {printf("statement->Var ASSIGN expression\n");}
 #line 1481 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 95 "calc.y" /* yacc.c:1646  */
+#line 75 "calc.y" /* yacc.c:1646  */
     {printf("statement->IF bool_expression THEN statements SEMICOLON ENDIF\n");}
 #line 1487 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 97 "calc.y" /* yacc.c:1646  */
+#line 77 "calc.y" /* yacc.c:1646  */
     {printf("statement->IF bool_expression THEN statements SEMICOLON ENDIF\n");}
 #line 1493 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 99 "calc.y" /* yacc.c:1646  */
+#line 79 "calc.y" /* yacc.c:1646  */
     {printf("statement->WHILE bool_expression BEGINLOOP statements SEMICOLON ENDLOOP\n");}
 #line 1499 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 101 "calc.y" /* yacc.c:1646  */
+#line 81 "calc.y" /* yacc.c:1646  */
     {printf("statement->DO BEGINLOOP statements SEMICOLON ENDLOOP WHILE bool_expression\n");}
 #line 1505 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 103 "calc.y" /* yacc.c:1646  */
+#line 83 "calc.y" /* yacc.c:1646  */
     {printf("statement->FOR vars ASSIGN NUMBER SEMICOLON bool_expression SEMICOLON vars ASSIGN expressions BEGINLOOP statements SEMICOLON ENDLOOP\n");}
 #line 1511 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 105 "calc.y" /* yacc.c:1646  */
+#line 85 "calc.y" /* yacc.c:1646  */
     {printf("statement->READ var\n");}
 #line 1517 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 107 "calc.y" /* yacc.c:1646  */
+#line 87 "calc.y" /* yacc.c:1646  */
     {printf("statement->WRITE vars\n");}
 #line 1523 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 109 "calc.y" /* yacc.c:1646  */
+#line 89 "calc.y" /* yacc.c:1646  */
     {printf("statement->CONTINUE\n");}
 #line 1529 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 111 "calc.y" /* yacc.c:1646  */
+#line 91 "calc.y" /* yacc.c:1646  */
     {printf("statement->RETURN expressions\n");}
 #line 1535 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 115 "calc.y" /* yacc.c:1646  */
+#line 95 "calc.y" /* yacc.c:1646  */
     {printf("bool_expression->relation_and_expression\n");}
 #line 1541 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 117 "calc.y" /* yacc.c:1646  */
+#line 97 "calc.y" /* yacc.c:1646  */
     {printf("bool_expression->relation_and_expression OR relation_and_expression\n");}
 #line 1547 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 121 "calc.y" /* yacc.c:1646  */
+#line 101 "calc.y" /* yacc.c:1646  */
     {printf("relation_and_expression->relation_expression\n");}
 #line 1553 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 123 "calc.y" /* yacc.c:1646  */
+#line 103 "calc.y" /* yacc.c:1646  */
     {printf("relation_and_expressions->relation_expression OR relation_expression\n");}
 #line 1559 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 126 "calc.y" /* yacc.c:1646  */
+#line 106 "calc.y" /* yacc.c:1646  */
     {printf("relation_expression->NOT expressions comp expressions\n");}
 #line 1565 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 128 "calc.y" /* yacc.c:1646  */
+#line 108 "calc.y" /* yacc.c:1646  */
     {printf("relation_expression->NOT TRUE\n");}
 #line 1571 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 130 "calc.y" /* yacc.c:1646  */
+#line 110 "calc.y" /* yacc.c:1646  */
     {printf("relation_expression->NOT FALSE\n");}
 #line 1577 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 132 "calc.y" /* yacc.c:1646  */
+#line 112 "calc.y" /* yacc.c:1646  */
     {printf("relation_expression->NOT L_PAREN bool_expressions R_PAREN\n");}
 #line 1583 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 134 "calc.y" /* yacc.c:1646  */
+#line 114 "calc.y" /* yacc.c:1646  */
     {printf("relation_expression->expressions comp expressions\n");}
 #line 1589 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 136 "calc.y" /* yacc.c:1646  */
+#line 116 "calc.y" /* yacc.c:1646  */
     {printf("relation_expression->TRUE\n");}
 #line 1595 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 138 "calc.y" /* yacc.c:1646  */
+#line 118 "calc.y" /* yacc.c:1646  */
     {printf("relation_expression->FALSE\n");}
 #line 1601 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 140 "calc.y" /* yacc.c:1646  */
+#line 120 "calc.y" /* yacc.c:1646  */
     {printf("relation_expression->L_PAREN bool_expressions R_PAREN\n");}
 #line 1607 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 145 "calc.y" /* yacc.c:1646  */
+#line 125 "calc.y" /* yacc.c:1646  */
     {printf("comp->EQ\n");}
 #line 1613 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 147 "calc.y" /* yacc.c:1646  */
+#line 127 "calc.y" /* yacc.c:1646  */
     {printf("comp->NEQ\n");}
 #line 1619 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 149 "calc.y" /* yacc.c:1646  */
+#line 129 "calc.y" /* yacc.c:1646  */
     {printf("comp->LT\n");}
 #line 1625 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 151 "calc.y" /* yacc.c:1646  */
+#line 131 "calc.y" /* yacc.c:1646  */
     {printf("comp->GT\n");}
 #line 1631 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 153 "calc.y" /* yacc.c:1646  */
+#line 133 "calc.y" /* yacc.c:1646  */
     {printf("comp->GTE\n");}
 #line 1637 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 155 "calc.y" /* yacc.c:1646  */
+#line 135 "calc.y" /* yacc.c:1646  */
     {printf("comp->LTE\n");}
 #line 1643 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 159 "calc.y" /* yacc.c:1646  */
+#line 139 "calc.y" /* yacc.c:1646  */
     {printf("var->IDENT\n");}
 #line 1649 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 161 "calc.y" /* yacc.c:1646  */
+#line 141 "calc.y" /* yacc.c:1646  */
     {printf("var->ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
 #line 1655 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 163 "calc.y" /* yacc.c:1646  */
+#line 143 "calc.y" /* yacc.c:1646  */
     {printf("var->ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
 #line 1661 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 167 "calc.y" /* yacc.c:1646  */
+#line 147 "calc.y" /* yacc.c:1646  */
     {printf("vars->var\n");}
 #line 1667 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 169 "calc.y" /* yacc.c:1646  */
+#line 149 "calc.y" /* yacc.c:1646  */
     {printf("vars->var COMMA vars\n");}
 #line 1673 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 172 "calc.y" /* yacc.c:1646  */
+#line 152 "calc.y" /* yacc.c:1646  */
     {printf("expression->multiplicative_expression\n");}
 #line 1679 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 174 "calc.y" /* yacc.c:1646  */
+#line 154 "calc.y" /* yacc.c:1646  */
     {printf("expression->multiplicative_expression PLUS multiplicative_expression\n");}
 #line 1685 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 176 "calc.y" /* yacc.c:1646  */
+#line 156 "calc.y" /* yacc.c:1646  */
     {printf("expression->multiplicative_expression MINUS multiplicative_expression\n");}
 #line 1691 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 179 "calc.y" /* yacc.c:1646  */
+#line 159 "calc.y" /* yacc.c:1646  */
     {printf("expressions->expression\n");}
 #line 1697 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 183 "calc.y" /* yacc.c:1646  */
+#line 163 "calc.y" /* yacc.c:1646  */
     {printf("multiplicative_expression->terms\n");}
 #line 1703 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 185 "calc.y" /* yacc.c:1646  */
+#line 165 "calc.y" /* yacc.c:1646  */
     {printf("multiplicative_expression->term MULT term\n");}
 #line 1709 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 187 "calc.y" /* yacc.c:1646  */
+#line 167 "calc.y" /* yacc.c:1646  */
     {printf("multiplicative_expression->term DIV term\n");}
 #line 1715 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 189 "calc.y" /* yacc.c:1646  */
+#line 169 "calc.y" /* yacc.c:1646  */
     {printf("multiplicative_expression->term PER term\n");}
 #line 1721 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 194 "calc.y" /* yacc.c:1646  */
+#line 174 "calc.y" /* yacc.c:1646  */
     {printf("term->identifier L_PAREN expressions R_PAREN\n");}
 #line 1727 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 196 "calc.y" /* yacc.c:1646  */
+#line 176 "calc.y" /* yacc.c:1646  */
     {printf("term->Var\n");}
 #line 1733 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 198 "calc.y" /* yacc.c:1646  */
+#line 178 "calc.y" /* yacc.c:1646  */
     {printf("term->NUMBER\n");}
 #line 1739 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 200 "calc.y" /* yacc.c:1646  */
+#line 180 "calc.y" /* yacc.c:1646  */
     {printf("term->L_PAREN expressions R_PAREN\n");}
 #line 1745 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 202 "calc.y" /* yacc.c:1646  */
+#line 182 "calc.y" /* yacc.c:1646  */
     {printf("term->MINUS var\n");}
 #line 1751 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 204 "calc.y" /* yacc.c:1646  */
+#line 184 "calc.y" /* yacc.c:1646  */
     {printf("term->MINUS NUMBER\n");}
 #line 1757 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 206 "calc.y" /* yacc.c:1646  */
+#line 186 "calc.y" /* yacc.c:1646  */
     {printf("term->MINUS L_PAREN expressions R_PAREN\n");}
 #line 1763 "y.tab.c" /* yacc.c:1646  */
     break;
@@ -1991,7 +1991,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 209 "calc.y" /* yacc.c:1906  */
+#line 189 "calc.y" /* yacc.c:1906  */
 
 
 int main(int argc, char ** argv)

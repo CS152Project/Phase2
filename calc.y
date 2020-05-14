@@ -36,26 +36,6 @@ functions: /*epsilon*/
        ;
 function: FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
 	{printf("function->FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY\n");}
-	/*| error IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
-	{printf("syntax error: missing FUNCTION\n");}
-	| FUNCTION error SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
-	{printf("syntax error: missing IDENT\n");}
-	| FUNCTION IDENT error BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
-	{printf("syntax error: missing SEMICOLON\n");}
-	| FUNCTION IDENT SEMICOLON error declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
-	{printf("syntax error: missing BEGIN_PARAMS\n");}
-	| FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations error BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY
-	{printf("syntax error: missing END_PARAMS\n");}
-	| FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS error declarations END_LOCALS BEGIN_BODY statements END_BODY
-	{printf("syntax error: missing BEGIN_LOCALS\n");}
-	| FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations error BEGIN_BODY statements END_BODY
-	{printf("syntax error: missing END_LOCALS\n");}
-	| FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS error statements END_BODY
-	{printf("syntax error: missing BEGIN_BODY\n");}
-	| FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY error END_BODY
-	{printf("syntax error: missing statements\n");}
-	| FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements error
-	{printf("syntax error: missing END_BODY\n");}*/
        ; 
 
 declarations: /*epsilon*/
