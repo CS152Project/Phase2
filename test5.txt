@@ -1,4 +1,4 @@
-function;
+function main;
 beginparams
 x := integer;
 a : [6] array of integer
@@ -8,5 +8,6 @@ beginlocals
 a  integer;
 endlocals
 beginbody
+write   ; 
 a = 1 + 2 * 3;
 endbody

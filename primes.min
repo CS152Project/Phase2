@@ -2,9 +2,9 @@ function main;
 beginparams
 endparams
 beginlocals
-n  integer;
+n : integer;
 a : array[1000] of integer; 
-i, j : iteger;
+i, j : integer;
 x, sqrt_n : integer;
 endlocals
 beginbody	
