@@ -42,11 +42,11 @@ declarations: /*epsilon*/
         | declaration SEMICOLON declarations 
            {printf("declarations->declaration SEMICOLON declarations\n");} 
         | error SEMICOLON declarations
-           {printf("syntax error: Missing declaration at line %d, position %d\n", currLine, currPos);}
+           {printf("syntax error: Missing declaration at line %d\n", currLine);}
         | declaration error declarations 
-           {printf("syntax error: Missing SEMICOLON at line %d, position %d\n", currLine, currPos);} 
+           {printf("syntax error: Missing SEMICOLON at line %d\n", currLine);} 
         | declaration SEMICOLON error
-           {printf("syntax error: Missing declarations at line %d, position %d\n", currLine, currPos);}
+           {printf("syntax error: Missing declarations at line %d\n", currLine);}
 	;
 declaration: ident COLON INTEGER
            {printf("declaration->identifiers SEMICOLON INTEGER\n");}
@@ -55,11 +55,11 @@ declaration: ident COLON INTEGER
         | ident COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
 	  {printf("declaration->identifiers SEMICOLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n");}
         | error COLON INTEGER
-          {printf("syntax error: missing identifier at line %d, position %d\n", currLine, currPos);}
+          {printf("syntax error: missing identifier at line %d\n", currLine);}
         | ident error INTEGER 
-          {printf("syntax error: missing COLON at line %d, position %d\n", currLine, currPos);}
+          {printf("syntax error: missing COLON at line %d\n", currLine);}
         | ident COLON error 
-          {printf("syntax error: missing INTEGER at line %d, position %d\n", currLine, currPos);} 
+          {printf("syntax error: missing INTEGER at line %d\n", currLine);} 
         ;
 
 ident: IDENT 
@@ -72,12 +72,12 @@ statements: statement SEMICOLON
          | statement SEMICOLON statements
           {printf("statement->statement SEMICOLON statements\n");}
          | statement SEMICOLON error  
-          {printf("syntax error: missing statements at line %d, position %d\n", currLine, currPos);}
+          {printf("syntax error: missing statements at line %d\n", currLine);}
          | error SEMICOLON statements
-          {printf("syntax error: missing statement at line %d, position %d\n", currLine, currPos);}
+          {printf("syntax error: missing statement at line %d\n", currLine);}
          | statement error statements
-          {printf("syntax error: missing SEMICOLON at line %d, position %d\n", currLine, currPos);} 
-         ;
+          {printf("syntax error: missing SEMICOLON at line %d\n", currLine);} 
+         
 statement: var ASSIGN expressions
 	 {printf("statement->Var ASSIGN expression\n");}
          | IF bool_expression THEN statements ENDIF
@@ -93,11 +93,11 @@ statement: var ASSIGN expressions
          | READ vars 
          {printf("statement->READ var\n");}
          | READ error
-         {printf("syntax error: no varables at line %d, position %d\n", currLine, currPos);}
+         {printf("syntax error: no varables at line %d\n", currLine);}
          | WRITE vars
          {printf("statement->WRITE vars\n");} 
          | WRITE error
-         {printf("syntax error: no variable at line %d, position %d\n", currLine, currPos);}
+         {printf("syntax error: no variable at line %d\n", currLine);}
          | CONTINUE
          {printf("statement->CONTINUE\n");}
          | RETURN expressions
@@ -152,13 +152,13 @@ var: IDENT
     | IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET 
     {printf("var->ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
     | error L_SQUARE_BRACKET expression R_SQUARE_BRACKET
-    {printf("syntax error: missing identifier in line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: missing identifier in line %d\n", currLine);}
     | IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET
     {printf("var->ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");} 
     | IDENT L_SQUARE_BRACKET error R_SQUARE_BRACKET
-    {printf("syntax error: missing expression in line %d, position %d\n", currLine, currPos);} 
+    {printf("syntax error: missing expression in line %d", currLine);} 
     | IDENT L_SQUARE_BRACKET error R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET
-    {printf("syntax error: missing expression in line %d, position %d\n", currLine, currPos);} 
+    {printf("syntax error: missing expression in line %d", currLine);} 
     ;
 
 vars: var
@@ -166,9 +166,9 @@ vars: var
     | var COMMA vars
     {printf("vars->var COMMA vars\n");}
     | error COMMA vars
-    {printf("syntax error: missing variable in line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: missing variable in line %d\n", currLine);}
     | var COMMA error
-    {printf("syntax error: missing variables in line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: missing variables in line %d\n", currLine);}
      
    ;
 expression: multiplicative_expression  
@@ -190,7 +190,7 @@ multiplicative_expression: term
                          {printf("multiplicative_expression->term DIV term\n");}
                         | term PER term
                          {printf("multiplicative_expression->term PER term\n");}
-                        ;
+            ;
 
 
 term: ident L_PAREN expressions R_PAREN 

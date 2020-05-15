@@ -1434,19 +1434,19 @@ yyreduce:
 
   case 8:
 #line 45 "calc.y" /* yacc.c:1646  */
-    {printf("syntax error: Missing declaration at line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: Missing declaration at line %d\n", currLine);}
 #line 1439 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
 #line 47 "calc.y" /* yacc.c:1646  */
-    {printf("syntax error: Missing SEMICOLON at line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: Missing SEMICOLON at line %d\n", currLine);}
 #line 1445 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
 #line 49 "calc.y" /* yacc.c:1646  */
-    {printf("syntax error: Missing declarations at line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: Missing declarations at line %d\n", currLine);}
 #line 1451 "y.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1470,19 +1470,19 @@ yyreduce:
 
   case 14:
 #line 58 "calc.y" /* yacc.c:1646  */
-    {printf("syntax error: missing identifier at line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: missing identifier at line %d\n", currLine);}
 #line 1475 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 60 "calc.y" /* yacc.c:1646  */
-    {printf("syntax error: missing COLON at line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: missing COLON at line %d\n", currLine);}
 #line 1481 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
 #line 62 "calc.y" /* yacc.c:1646  */
-    {printf("syntax error: missing INTEGER at line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: missing INTEGER at line %d\n", currLine);}
 #line 1487 "y.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1512,19 +1512,19 @@ yyreduce:
 
   case 21:
 #line 75 "calc.y" /* yacc.c:1646  */
-    {printf("syntax error: missing statements at line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: missing statements at line %d\n", currLine);}
 #line 1517 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
 #line 77 "calc.y" /* yacc.c:1646  */
-    {printf("syntax error: missing statement at line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: missing statement at line %d\n", currLine);}
 #line 1523 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
 #line 79 "calc.y" /* yacc.c:1646  */
-    {printf("syntax error: missing SEMICOLON at line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: missing SEMICOLON at line %d\n", currLine);}
 #line 1529 "y.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1572,7 +1572,7 @@ yyreduce:
 
   case 31:
 #line 96 "calc.y" /* yacc.c:1646  */
-    {printf("syntax error: no varables at line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: no varables at line %d\n", currLine);}
 #line 1577 "y.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1584,7 +1584,7 @@ yyreduce:
 
   case 33:
 #line 100 "calc.y" /* yacc.c:1646  */
-    {printf("syntax error: no variable at line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: no variable at line %d\n", currLine);}
 #line 1589 "y.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1722,7 +1722,7 @@ yyreduce:
 
   case 56:
 #line 155 "calc.y" /* yacc.c:1646  */
-    {printf("syntax error: missing identifier in line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: missing identifier in line %d\n", currLine);}
 #line 1727 "y.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1734,13 +1734,13 @@ yyreduce:
 
   case 58:
 #line 159 "calc.y" /* yacc.c:1646  */
-    {printf("syntax error: missing expression in line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: missing expression in line %d", currLine);}
 #line 1739 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
 #line 161 "calc.y" /* yacc.c:1646  */
-    {printf("syntax error: missing expression in line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: missing expression in line %d", currLine);}
 #line 1745 "y.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1758,13 +1758,13 @@ yyreduce:
 
   case 62:
 #line 169 "calc.y" /* yacc.c:1646  */
-    {printf("syntax error: missing variable in line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: missing variable in line %d\n", currLine);}
 #line 1763 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
 #line 171 "calc.y" /* yacc.c:1646  */
-    {printf("syntax error: missing variables in line %d, position %d\n", currLine, currPos);}
+    {printf("syntax error: missing variables in line %d\n", currLine);}
 #line 1769 "y.tab.c" /* yacc.c:1646  */
     break;
 
