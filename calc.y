@@ -93,7 +93,7 @@ statement: var ASSIGN expressions
          | READ vars 
          {printf("statement->READ var\n");}
          | READ error
-         {printf("syntax error: no varables at line %d\n", currLine);}
+         {printf("syntax error: no variables at line %d\n", currLine);}
          | WRITE vars
          {printf("statement->WRITE vars\n");} 
          | WRITE error
@@ -130,6 +130,10 @@ relation_expression: NOT expressions comp expressions
                  {printf("relation_expression->FALSE\n");}
                  | L_PAREN bool_expression R_PAREN
                  {printf("relation_expression->L_PAREN bool_expressions R_PAREN\n");}
+                 | L_PAREN error R_PAREN
+                 {printf("syntax error: missing bool_expression in line %d\n", currLine);}
+                 | NOT L_PAREN error R_PAREN
+                 {printf("synax error: missing bool_expression in line %d\n", currLine);}
          ;
 
 comp: EQ
@@ -144,6 +148,8 @@ comp: EQ
     {printf("comp->GTE\n");}
      | LTE
     {printf("comp->LTE\n");}
+     | error 
+    {printf("syntax error: missing EQ, NEQ, LT, GT, GTE or LTE in line %d\n", currLine);}
    ;
 
 var: IDENT  
@@ -155,9 +161,11 @@ var: IDENT
     | IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET
     {printf("var->ident L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");} 
     | IDENT L_SQUARE_BRACKET error R_SQUARE_BRACKET
-    {printf("syntax error: missing expression in line %d", currLine);} 
+    {printf("syntax error: missing expression in line %d\n", currLine);} 
     | IDENT L_SQUARE_BRACKET error R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET
-    {printf("syntax error: missing expression in line %d", currLine);} 
+    {printf("syntax error: missing expression in line %d\n", currLine);} 
+    | IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET error R_SQUARE_BRACKET
+    {printf("syntax error: missing expression in line %d\n", currLine);}  
     ;
 
 vars: var

@@ -16,12 +16,12 @@ i : integer;
 endlocals
 beginbody
 while i <=n beginloop
-     if a[i] == 1 then
+     if a[   ] == 1 then
         write i;
         read ;   ## no variable for read here 
      endif;
 i := i + 1;
-b[ ] := [15+6];
+xNum[7+5][];
 endloop;
       [1000 + 7];   ## missing identifier here 
 endbody
