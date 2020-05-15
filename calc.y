@@ -42,11 +42,11 @@ declarations: /*epsilon*/
         | declaration SEMICOLON declarations 
            {printf("declarations->declaration SEMICOLON declarations\n");} 
         | error SEMICOLON declarations
-           {printf("syntax error: Missing declaration at line %d, position %d\n", currLine, currPos);}
+           {printf("syntax error: Missing declaration at line %d\n", currLine);}
         | declaration error declarations 
-           {printf("syntax error: Missing SEMICOLON at line %d, position %d\n", currLine, currPos);} 
+           {printf("syntax error: Missing SEMICOLON at line %d\n", currLine);} 
         | declaration SEMICOLON error
-           {printf("syntax error: Missing declarations at line %d, position %d\n", currLine, currPos);}
+           {printf("syntax error: Missing declarations at line %d\n", currLine);}
 	;
 declaration: ident COLON INTEGER
            {printf("declaration->identifiers SEMICOLON INTEGER\n");}
@@ -55,11 +55,11 @@ declaration: ident COLON INTEGER
         | ident COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER
 	  {printf("declaration->identifiers SEMICOLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n");}
         | error COLON INTEGER
-          {printf("syntax error: missing identifier at line %d, position %d\n", currLine, currPos);}
+          {printf("syntax error: missing identifier at line %d\n", currLine);}
         | ident error INTEGER 
-          {printf("syntax error: missing COLON at line %d, position %d\n", currLine, currPos);}
+          {printf("syntax error: missing COLON at line %d\n", currLine);}
         | ident COLON error 
-          {printf("syntax error: missing INTEGER at line %d, position %d\n", currLine, currPos);} 
+          {printf("syntax error: missing INTEGER at line %d\n", currLine);} 
         ;
 
 ident: IDENT 
@@ -120,8 +120,6 @@ relation_expression: NOT expressions comp expressions
                  {printf("relation_expression->FALSE\n");}
                  | L_PAREN bool_expression R_PAREN
                  {printf("relation_expression->L_PAREN bool_expressions R_PAREN\n");}
-		| NOT expressions error expressions
-		{printf("Syntax error: Missing comp at line %d, position %d\n", currLine, currPos);}
          ;
 
 comp: EQ
@@ -157,6 +155,14 @@ expression: multiplicative_expression
           {printf("expression->multiplicative_expression PLUS multiplicative_expression\n");} 
          | multiplicative_expression MINUS multiplicative_expression
           {printf("expression->multiplicative_expression MINUS multiplicative_expression\n");}
+	 | error PLUS multiplicative_expression
+	  {printf("Syntax error: Missing first term for addition at line %d\n", currLine);}
+	 | multiplicative_expression PLUS error
+	  {printf("Syntax error: Missing second term for addition at line %d\n", currLine);}
+	 | error PLUS error
+	  {printf("Syntax error: No terms for PLUS available at line %d\n", currLine);}
+	 | multiplicative_expression MINUS error
+	  {printf("Syntax error: Missing second term for subtraction at line %d\n", currLine);}
          ;
 expressions: expression
 	   {printf("expressions->expression\n");}
@@ -171,17 +177,17 @@ multiplicative_expression: term
                         | term PER term
                          {printf("multiplicative_expression->term PER term\n");}
 			| error MULT term
-			{printf("Syntax error: Missing first term for multiplication at line %d, position %d\n", currLine, currPos);}
+			{printf("Syntax error: Missing first term for multiplication at line %d\n", currLine);}
 			| term MULT error
-			{printf("Syntax error: Missing second term for multiplication at line %d, position %d\n", currLine, currPos);}
+			{printf("Syntax error: Missing second term for multiplication at line %d\n", currLine);}
 			| error DIV term
-			{printf("Syntax error: Missing first term for division at line %d, position %d\n", currLine, currPos);}
+			{printf("Syntax error: Missing first term for division at line %d\n", currLine);}
 			| term DIV error
-			{printf("Syntax error: Missing second term for division at line %d, position %d\n", currLine, currPos);}
+			{printf("Syntax error: Missing second term for division at line %d\n", currLine);}
 			| error PER term
-			{printf("Syntax error: Missing first term for modulus at line %d, position %d\n", currLine, currPos);}
+			{printf("Syntax error: Missing first term for modulus at line %d\n", currLine);}
 			| term PER error
-			{printf("Syntax error: Missing second term for modulus at line %d, position %d\n", currLine, currPos);}
+			{printf("Syntax error: Missing second term for modulus at line %d\n", currLine);}
 			| error MULT error
 			{printf("Syntax error: No terms for MULT available at line %d\n", currLine);}
 			| error DIV error

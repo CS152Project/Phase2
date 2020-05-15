@@ -1,0 +1,14 @@
+function main;
+beginparams
+endparams
+beginlocals
+a : integer;
+b : integer;
+c : integer;
+endlocals
+beginbody
+a := 4;
+b := 3;
+
+c := a - ;
+endbody
