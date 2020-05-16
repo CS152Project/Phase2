@@ -1,5 +1,6 @@
 function main;
 beginparams
+bNum, bNum
 myNum : integer;
 yourNum : integer;
 endparams

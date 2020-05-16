@@ -1484,7 +1484,7 @@ yyreduce:
 
   case 11:
 #line 52 "calc.y" /* yacc.c:1646  */
-    {printf("declaration->identifiers SEMICOLON INTEGER\n");}
+    {printf("declaration->ident SEMICOLON INTEGER\n");}
 #line 1489 "y.tab.c" /* yacc.c:1646  */
     break;
 
