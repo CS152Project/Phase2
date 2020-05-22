@@ -1,13 +1,9 @@
 function main;
-beginparams
-x := integer;
-a : [6] array of integer
-b := integer; 
+beginparams 
 endparams
 beginlocals
-a  integer;
+a : integer;
 endlocals
-beginbody
-write   ; 
+beginbody 
 a = 1 + 2 * 3;
 endbody
