@@ -23,7 +23,17 @@ void yyerror(const char *msg);
 %token EQ NEQ LT GT GTE LTE AND OR NOT TRUE FALSE RETURN ASSIGN  
 %token <identVal> IDENT  
 %token <iVal> NUMBER
-%nonassoc UMINUS
+ 
+%right ASSIGN 
+%left OR   
+%left AND
+%right NOT 
+%left EQ NEQ LT GT GTE LTE 
+%left ADD SUB
+%left MULT DIV PER
+%nonassoc UMINUS 
+%left L_SQUARE_BRACKET R_SQUARE_BRACKET
+%left L_PAREN R_PAREN
 %%
 
 program: functions 
@@ -102,6 +112,8 @@ statement: var ASSIGN expressions
          {printf("statement->CONTINUE\n");}
          | RETURN expressions
          {printf("statement->RETURN expressions\n");} 
+         | var error expressions
+         {printf("syntax error: no assign := at line %d\n", currLine);}
          ;
 
 bool_expression: relation_and_expression

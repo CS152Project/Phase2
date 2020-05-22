@@ -96,7 +96,9 @@ extern int yydebug;
     ASSIGN = 306,
     IDENT = 307,
     NUMBER = 308,
-    UMINUS = 309
+    ADD = 309,
+    SUB = 310,
+    UMINUS = 311
   };
 #endif
 
@@ -110,7 +112,7 @@ union YYSTYPE
    char * identval;
    int iVal;
 
-#line 114 "y.tab.h" /* yacc.c:1909  */
+#line 116 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
